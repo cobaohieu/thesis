@@ -1,0 +1,5 @@
+pip install -U pynetworktables
+pip install -U wiringpi2
+
+
+https://github.com/Gadgetoid/WiringPi2-Python

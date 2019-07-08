@@ -1,3 +1,4 @@
+sudo apt install python-pip
 pip install -U pynetworktables
 pip install -U wiringpi2
 python -m pip install --upgrade libusb

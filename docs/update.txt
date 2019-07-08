@@ -1,5 +1,10 @@
 pip install -U pynetworktables
 pip install -U wiringpi2
+python -m pip install --upgrade libusb
+pip install pyusb
+sudo apt-get install python-usb python3-usb
+pip install pywinusb
 
+I copied libusb-1.0.dll from C:\Users\username\AppData\Roaming\Python\Python27\site-packages\libusb\_platform\_windows\x64\ to C:\Windows\System32\
 
 https://github.com/Gadgetoid/WiringPi2-Python

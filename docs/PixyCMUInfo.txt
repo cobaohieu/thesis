@@ -1,0 +1,88 @@
+Device Descriptor:
+bcdUSB:             0x0200
+bDeviceClass:         0xFF
+bDeviceSubClass:      0x01
+bDeviceProtocol:      0x00
+bMaxPacketSize0:      0x40 (64)
+idVendor:           0xB1AC
+idProduct:          0xF000
+bcdDevice:          0x0100
+iManufacturer:        0x01
+0x0409: "Charmed Labs"
+iProduct:             0x02
+0x0409: "Pixy"
+iSerialNumber:        0x03
+0x0409: "DEMO 0.0"
+bNumConfigurations:   0x01
+
+ConnectionStatus: DeviceConnected
+Current Config Value: 0x01
+Device Bus Speed:     High
+Device Address:       0x27
+Open Pipes:              3
+
+Endpoint Descriptor:
+bEndpointAddress:     0x81  IN
+Transfer Type:   Interrupt
+wMaxPacketSize:     0x0010 (16)
+bInterval:            0x02
+
+Endpoint Descriptor:
+bEndpointAddress:     0x02  OUT
+Transfer Type:        Bulk
+wMaxPacketSize:     0x0200 (512)
+bInterval:            0x00
+
+Endpoint Descriptor:
+bEndpointAddress:     0x82  IN
+Transfer Type:        Bulk
+wMaxPacketSize:     0x0200 (512)
+bInterval:            0x00
+
+Configuration Descriptor:
+wTotalLength:       0x0030
+bNumInterfaces:       0x02
+bConfigurationValue:  0x01
+iConfiguration:       0x00
+bmAttributes:         0x80 (Bus Powered )
+MaxPower:             0x32 (100 Ma)
+
+Interface Descriptor:
+bInterfaceNumber:     0x00
+bAlternateSetting:    0x00
+bNumEndpoints:        0x01
+bInterfaceClass:      0xFF
+bInterfaceSubClass:   0x01
+bInterfaceProtocol:   0x00
+iInterface:           0x04
+0x0409: "Camera"
+0x0409: "Camera"
+
+Endpoint Descriptor:
+bEndpointAddress:     0x81  IN
+Transfer Type:   Interrupt
+wMaxPacketSize:     0x0010 (16)
+bInterval:            0x02
+
+Interface Descriptor:
+bInterfaceNumber:     0x01
+bAlternateSetting:    0x00
+bNumEndpoints:        0x02
+bInterfaceClass:      0xFF
+bInterfaceSubClass:   0x01
+bInterfaceProtocol:   0x00
+iInterface:           0x04
+0x0409: "Camera"
+0x0409: "Camera"
+
+Endpoint Descriptor:
+bEndpointAddress:     0x02  OUT
+Transfer Type:        Bulk
+wMaxPacketSize:     0x0200 (512)
+bInterval:            0x00
+
+Endpoint Descriptor:
+bEndpointAddress:     0x82  IN
+Transfer Type:        Bulk
+wMaxPacketSize:     0x0200 (512)
+bInterval:            0x00

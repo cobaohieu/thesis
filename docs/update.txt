@@ -1,10 +1,11 @@
-sudo apt install python-pip
-sudo apt install python3-pip
+sudo apt install python-pip -y
+sudo apt install python3-pip -y
+sudo apt-get install python-usb python3-usb -y
+sudo python -m pip install --upgrade libusb
+pip install -U pyudev
 pip install -U pynetworktables
 pip install -U wiringpi2
-python -m pip install --upgrade libusb
 pip install pyusb
-sudo apt-get install python-usb python3-usb
 pip install pywinusb
 
 I copied libusb-1.0.dll from C:\Users\username\AppData\Roaming\Python\Python27\site-packages\libusb\_platform\_windows\x64\ to C:\Windows\System32\

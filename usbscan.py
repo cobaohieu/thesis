@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 import requests
 import json
 import websocket
@@ -8,6 +7,7 @@ import usb
 import usb.core
 import usb.util
 import usb.backend.libusb1
+import sys
 
 dev = None
 ep = None
@@ -65,13 +65,15 @@ while 1:
         # print(str)
         print('Success connect')
     except Exception as e:
-        error_code = e.args[0]
-        # 110 is timeout code, expected
-        if error_code == 110:
-            print("device connected, waiting for input")
-        else:
-            print(e)
-            print("device disconnected")
-            (dev, ep) = connect_to_scanner()
-            if dev is None and ep is None:
-                time.sleep(1)
+        # error_code = e.args[0]
+        # # 110 is timeout code, expected
+        # if error_code == 110:
+        #     print("device connected, waiting for input")
+        # else:
+        #     print(e)
+        #     print("device disconnected")
+        #     (dev, ep) = connect_to_scanner()
+        #     if dev is None and ep is None:
+        #         time.sleep(1)
+
+        print("device disconnected")

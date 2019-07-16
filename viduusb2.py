@@ -15,7 +15,7 @@ try:
 
 
 
-	print dev
+	print(dev)
 
 	#print dev.read(0x81, 8, 100)
 
@@ -23,7 +23,7 @@ try:
 
 	usb.util.claim_interface(dev, 0)
 
-	print dev.ctrl_transfer(0x81,5,0,0)
+	print(dev.ctrl_transfer(0x81,5,0,0))
 
 
 	cfg = dev.get_active_configuration()

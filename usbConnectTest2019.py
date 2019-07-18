@@ -38,6 +38,7 @@ cfg = dev.get_active_configuration()
 interface_number = cfg[(0,0)].bInterfaceNumber
 alternate_settting = usb.control.get_interface(dev,interface_number)
 intf = usb.util.find_descriptor(cfg, bInterfaceNumber = interface_number, bAlternateSetting = 0)
+alt = usb.util.find_descriptor(cfg, find_all=True, bInterfaceNumber=1)
 
 ep = usb.util.find_descriptor(
     intf,
@@ -56,4 +57,3 @@ assert ep is not None, \
 #     print("error: No Pixy devices have been detected.")
 # ep.write('test')
 
-alt = usb.util.find_descriptor(cfg, find_all=True, bInterfaceNumber=1)

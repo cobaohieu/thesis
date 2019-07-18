@@ -1,3 +1,4 @@
+import os
 import sys
 import usb.core
 import usb.backend.libusb1
@@ -10,13 +11,17 @@ from PyQt5.QtMultimediaWidgets import *
 
 class PixyCMU5(QMainWindow):
 
-    def __init__(self, parent=None):
-        super(PixyCMU5, self).__init__(parent)
+    def __init__(self):                     #, parent=None):
+        super(PixyCMU5, self).__init__()    #(parent)
         self.setWindowTitle('Pixy Camera Control')
-        self.setWindowIcon(QIcon('PixyControl-1.png'))
+        #scriptDir = os.path.dirname(os.path.realpath(__file__))
+        self.setWindowIcon(QIcon('imgs/logo.png'))#(scriptDir + os.path.sep + 'logo.png'))
         self.initUI()
 
     def initUI(self):
+
+        palette = qApp.palette()
+        palette.setColor(QPalette.Text, QColor(255, 0, 0))
 
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
 
@@ -139,6 +144,7 @@ class PixyCMU5(QMainWindow):
         self.mediaPlayer.error.connect(self.handleError)
 
         self.b = QPlainTextEdit(self)
+        self.b.setReadOnly(True)
         # self.b.insertPlaintText("")
         self.b.move(14, 485)
         self.b.resize(649, 108)
@@ -146,6 +152,7 @@ class PixyCMU5(QMainWindow):
         # Text In View
         self.t = QTextCursor(self.b.document())
         self.t.insertText("error: No Pixy devices have been detected.")
+
         self.t.insertBlock()
         self.t.block().setVisible(False)
         print(self.b.document().toPlainText())

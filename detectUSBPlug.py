@@ -4,8 +4,6 @@ import usb.core
 import usb.util
 import usb.backend.libusb1
 
-
-
 devClass = usb.core.find(bDeviceClass=255)
 if devClass is None:
     sys.stdout.write('error: No Pixy devices have been detected.')

@@ -2,6 +2,7 @@ import os
 import sys
 import usb.core
 import usb.backend.libusb1
+import PyQt5
 from PyQt5 import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -12,11 +13,11 @@ from PyQt5.QtMultimediaWidgets import *
 
 class PixyCMU5(QMainWindow):
 
-    def __init__(self):  # , parent=None):
-        super(PixyCMU5, self).__init__()  # (parent)
+    def __init__(self, parent=None):
+        super(PixyCMU5, self).__init__(parent)
         self.setWindowTitle('Pixy Camera Control')
-        # scriptDir = os.path.dirname(os.path.realpath(__file__))
-        self.setWindowIcon(QIcon('imgs/logo.png'))  # (scriptDir + os.path.sep + 'logo.png'))
+        self.setWindowIcon(QIcon('imgs/logo.png'))
+
         self.initUI()
 
     def initUI(self):
@@ -41,7 +42,7 @@ class PixyCMU5(QMainWindow):
         self.errorLabel.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
 
         # Create new action
-        openAction = QAction(QIcon('open.png'), '&Open', self)
+        openAction = QAction('Open', self) #QIcon('open.png'), 'Open', self)
         openAction.setShortcut('Ctrl+O')
         openAction.setStatusTip('Open movie')
         openAction.triggered.connect(self.openFile)
@@ -63,7 +64,7 @@ class PixyCMU5(QMainWindow):
         saveParameters_action.setShortcut('Ctrl+P')
 
         # Create exit action
-        exitAction = QAction(QIcon('exit.png'), '&Exit', self)
+        exitAction = QAction('Exit', self) # QIcon('exit.png'), 'Exit', self)
         exitAction.setShortcut('Ctrl+W')
         exitAction.setStatusTip('Exit application')
         exitAction.triggered.connect(self.exitCall)
@@ -100,9 +101,9 @@ class PixyCMU5(QMainWindow):
         # Create menu bar and add action
         menuBar = self.menuBar()
         menuBar.setNativeMenuBar(False)  # only for Mac OS
-        fileMenu = menuBar.addMenu('&File')
-        actionMenu = menuBar.addMenu('&Action')
-        helpMenu = menuBar.addMenu('&Help')
+        fileMenu = menuBar.addMenu('File')
+        actionMenu = menuBar.addMenu('Action')
+        helpMenu = menuBar.addMenu('Help')
 
         # fileMenu.addAction(newAction)
         fileMenu.addAction(openAction)
@@ -152,12 +153,12 @@ class PixyCMU5(QMainWindow):
 
         # Text In View
         self.t = QTextCursor(self.b.document())
-        # self.t.insertText("error: No Pixy devices have been detected.")
+        self.t.insertText("error: No Pixy devices have been detected.")
         # self.t.insertBlock()
         # self.t.block().setVisible(False)
 
-        redText = "<span style=\" font-size:8pt; font-weight:600; color:#ff0000;\" >"
-        self.t = redText.append("error: No Pixy devices have been detected.")
+        # redText = "<span style=\" font-size:8pt; font-weight:600; color:#ff0000;\" >"
+        # self.t = redText.append("error: No Pixy devices have been detected.")
         # self.myTextEdit.write(redText)
         print(self.b.document().toPlainText())
 
@@ -219,7 +220,6 @@ class PixyCMU5(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     PixyControl = PixyCMU5()
-    PixyControl.show()
     PixyControl.resize(678, 626)
     PixyControl.show()
     sys.exit(app.exec_())

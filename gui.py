@@ -9,13 +9,14 @@ from PyQt5.QtCore import *
 from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import *
 
+
 class PixyCMU5(QMainWindow):
 
-    def __init__(self):                     #, parent=None):
-        super(PixyCMU5, self).__init__()    #(parent)
+    def __init__(self):  # , parent=None):
+        super(PixyCMU5, self).__init__()  # (parent)
         self.setWindowTitle('Pixy Camera Control')
-        #scriptDir = os.path.dirname(os.path.realpath(__file__))
-        self.setWindowIcon(QIcon('imgs/logo.png'))#(scriptDir + os.path.sep + 'logo.png'))
+        # scriptDir = os.path.dirname(os.path.realpath(__file__))
+        self.setWindowIcon(QIcon('imgs/logo.png'))  # (scriptDir + os.path.sep + 'logo.png'))
         self.initUI()
 
     def initUI(self):
@@ -40,7 +41,7 @@ class PixyCMU5(QMainWindow):
         self.errorLabel.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
 
         # Create new action
-        openAction = QAction(QIcon('open.png'), '&Open', self)        
+        openAction = QAction(QIcon('open.png'), '&Open', self)
         openAction.setShortcut('Ctrl+O')
         openAction.setStatusTip('Open movie')
         openAction.triggered.connect(self.openFile)
@@ -62,7 +63,7 @@ class PixyCMU5(QMainWindow):
         saveParameters_action.setShortcut('Ctrl+P')
 
         # Create exit action
-        exitAction = QAction(QIcon('exit.png'), '&Exit', self)        
+        exitAction = QAction(QIcon('exit.png'), '&Exit', self)
         exitAction.setShortcut('Ctrl+W')
         exitAction.setStatusTip('Exit application')
         exitAction.triggered.connect(self.exitCall)
@@ -73,16 +74,16 @@ class PixyCMU5(QMainWindow):
         power_on.setShortcut('F1')
         powerMenu.addAction(power_on)
 
-        power_off = QAction('Off', self) 
+        power_off = QAction('Off', self)
         power_off.setShortcut('F2')
         powerMenu.addAction(power_off)
 
         recordMenu = QMenu('Record', self)
 
-        record_play = QAction('Play', self) 
-        record_play.setShortcut('F3')      
-        recordMenu.addAction(record_play)     
-           
+        record_play = QAction('Play', self)
+        record_play.setShortcut('F3')
+        recordMenu.addAction(record_play)
+
         record_pause = QAction('Pause', self)
         record_pause.setShortcut('F4')
         recordMenu.addAction(record_pause)
@@ -98,12 +99,12 @@ class PixyCMU5(QMainWindow):
 
         # Create menu bar and add action
         menuBar = self.menuBar()
-        menuBar.setNativeMenuBar(False) # only for Mac OS
+        menuBar.setNativeMenuBar(False)  # only for Mac OS
         fileMenu = menuBar.addMenu('&File')
         actionMenu = menuBar.addMenu('&Action')
         helpMenu = menuBar.addMenu('&Help')
 
-        #fileMenu.addAction(newAction)
+        # fileMenu.addAction(newAction)
         fileMenu.addAction(openAction)
         fileMenu.addAction(configure_action)
         fileMenu.addAction(saveParameters_action)
@@ -116,7 +117,7 @@ class PixyCMU5(QMainWindow):
         actionMenu.addMenu(recordMenu)
         actionMenu.addAction(getFrame_action)
 
-        #helpMenu.addAction(newAction)
+        # helpMenu.addAction(newAction)
         helpMenu.addAction(help_action)
         helpMenu.addAction(about_action)
 
@@ -151,13 +152,16 @@ class PixyCMU5(QMainWindow):
 
         # Text In View
         self.t = QTextCursor(self.b.document())
-        self.t.insertText("error: No Pixy devices have been detected.")
+        # self.t.insertText("error: No Pixy devices have been detected.")
+        # self.t.insertBlock()
+        # self.t.block().setVisible(False)
 
-        self.t.insertBlock()
-        self.t.block().setVisible(False)
+        redText = "<span style=\" font-size:8pt; font-weight:600; color:#ff0000;\" >"
+        self.t = redText.append("error: No Pixy devices have been detected.")
+        # self.myTextEdit.write(redText)
         print(self.b.document().toPlainText())
-        
-        self.center()    
+
+        self.center()
 
     def center(self):
         qr = self.frameGeometry()
@@ -166,15 +170,15 @@ class PixyCMU5(QMainWindow):
         self.move(qr.topLeft())
 
     def selected(self, q):
-        print(q.text() + ' selected')    
+        print(q.text() + ' selected')
 
     def openFile(self):
         fileName, _ = QFileDialog.getOpenFileName(self, "Open Movie",
-                QDir.homePath())
+                                                  QDir.homePath())
 
         if fileName != '':
             self.mediaPlayer.setMedia(
-                    QMediaContent(QUrl.fromLocalFile(fileName)))
+                QMediaContent(QUrl.fromLocalFile(fileName)))
             self.playButton.setEnabled(True)
 
     def exitCall(self):
@@ -189,10 +193,10 @@ class PixyCMU5(QMainWindow):
     def mediaStateChanged(self, state):
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.playButton.setIcon(
-                    self.style().standardIcon(QStyle.SP_MediaPause))
+                self.style().standardIcon(QStyle.SP_MediaPause))
         else:
             self.playButton.setIcon(
-                    self.style().standardIcon(QStyle.SP_MediaPlay))
+                self.style().standardIcon(QStyle.SP_MediaPlay))
 
     def positionChanged(self, position):
         self.positionSlider.setValue(position)
@@ -208,7 +212,6 @@ class PixyCMU5(QMainWindow):
         self.errorLabel.setText("Error: " + self.mediaPlayer.errorString())
 
     # def usbDetect():
-        
 
     # def usbConnect():
 
@@ -216,10 +219,11 @@ class PixyCMU5(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     PixyControl = PixyCMU5()
-    PixyControl.show()    
+    PixyControl.show()
     PixyControl.resize(678, 626)
     PixyControl.show()
     sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
     main()

@@ -5,11 +5,16 @@ sudo python -m pip install --upgrade libusb
 pip install -U pyudev
 pip install -U pynetworktables
 pip install -U wiringpi2
+pip3 install termcolor
+pip install colour
 pip install pyusb
 pip install pywinusb
-pip install  websocket
+pip install websocket
 pip install portalocker
 pip install micropython-fcntl
+pip install PySimpleGUI
+pip3 install PyQt5-sip
+pip3 install PyQt5
 
 I copied libusb-1.0.dll from C:\Users\username\AppData\Roaming\Python\Python27\site-packages\libusb\_platform\_windows\x64\ to C:\Windows\System32\
 --------------------

@@ -12,8 +12,6 @@ dev = usb.core.find(idVendor=0xb1ac, idProduct=0xf000)
 if dev is None:
     sys.stdout.write("error: No Pixy devices have been detected.")
 
-    # return;
-
 print("deviceClass = " + str(dev.bDeviceClass))
 for cfg in dev:
     sys.stdout.write("configuration: " + str(cfg.bConfigurationValue) + '\n')

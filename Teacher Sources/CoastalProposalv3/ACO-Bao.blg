@@ -1,0 +1,17 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: ACO-Bao.aux
+The style file: plain.bst
+Database file #1: references.bib
+Repeated entry---line 399 of file references.bib
+ : @article{Hillis:1986:DPA:7902.7903
+ :                                   ,
+I'm skipping whatever remains of this entry
+Name 3 in "Altshuler, D. L. and Dickson, W. B. and Vance, J. T.and Roberts, S. P., and Dickinson, M. H." has a comma at the end for entry BeeFrequency
+while executing---line 1049 of file plain.bst
+Name 3 in "Altshuler, D. L. and Dickson, W. B. and Vance, J. T.and Roberts, S. P., and Dickinson, M. H." has a comma at the end for entry BeeFrequency
+while executing---line 1090 of file plain.bst
+Warning--can't use both author and editor fields in Beyan2016
+Warning--can't use both author and editor fields in Broggi2009
+Warning--empty booktitle in CCL
+Warning--can't use both author and editor fields in Oye2012
+Warning--empty chapter and pages in EM2
+(There were 3 error messages)

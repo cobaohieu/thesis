@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="360b8ada-0df9-4a2c-af22-c3c2fb5c6719" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="360b8ada-0df9-4a2c-af22-c3c2fb5c6719" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/update.txt" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,53 +31,17 @@
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="thesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thesis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="thesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="thesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="drivers" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="C:/VisualDataMining" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Python.detectUSBPlug">
     <configuration name="PickerColor" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -193,6 +159,18 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -211,11 +189,35 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1379" height="269" key="GridCell.Tab.0.bottom" timestamp="1575694295400">
+      <screen x="0" y="22" width="1920" height="1033" />
+    </state>
+    <state width="1379" height="269" key="GridCell.Tab.0.bottom/0.22.1920.1033@0.22.1920.1033" timestamp="1575694295400" />
+    <state width="1379" height="269" key="GridCell.Tab.0.center" timestamp="1575694295396">
+      <screen x="0" y="22" width="1920" height="1033" />
+    </state>
+    <state width="1379" height="269" key="GridCell.Tab.0.center/0.22.1920.1033@0.22.1920.1033" timestamp="1575694295396" />
+    <state width="1379" height="269" key="GridCell.Tab.0.left" timestamp="1575694295394">
+      <screen x="0" y="22" width="1920" height="1033" />
+    </state>
+    <state width="1379" height="269" key="GridCell.Tab.0.left/0.22.1920.1033@0.22.1920.1033" timestamp="1575694295394" />
+    <state width="1379" height="269" key="GridCell.Tab.0.right" timestamp="1575694295399">
+      <screen x="0" y="22" width="1920" height="1033" />
+    </state>
+    <state width="1379" height="269" key="GridCell.Tab.0.right/0.22.1920.1033@0.22.1920.1033" timestamp="1575694295399" />
+    <state x="469" y="177" key="SettingsEditor" timestamp="1575694051880">
+      <screen x="0" y="22" width="1920" height="1033" />
+    </state>
+    <state x="469" y="177" key="SettingsEditor/0.22.1920.1033@0.22.1920.1033" timestamp="1575694051880" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

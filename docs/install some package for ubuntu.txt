@@ -1,20 +1,56 @@
-sudo apt install python-pip -y
-sudo apt install python3-pip -y
-sudo apt-get install python-usb python3-usb -y
-sudo python -m pip install --upgrade libusb
-pip install -U pyudev
-pip install -U pynetworktables
-pip install -U wiringpi2
-pip3 install termcolor
-pip install colour
-pip install pyusb
-pip install pywinusb
-pip install websocket
-pip install portalocker
-pip install micropython-fcntl
-pip install PySimpleGUI
-pip3 install PyQt5-sip
-pip3 install PyQt5
+sudo apt install libcanberra-gtk-module libcanberra-gtk3-module -y
+sudo apt-get install libavformat-dev libavutil-dev libswscale-dev -y
+sudo apt-get install libv4l-dev -y &&
+sudo apt-get install libcanberra-gtk* -y &&
+sudo apt-get install libcanberra-gtk-module:i386 -y &&
+sudo apt install python-pip -y &&
+sudo apt install python3-pip -y &&
+sudo apt-get install python-usb python3-usb -y &&
+pip3 install --upgrade libusb &&
+pip3 install -U pyudev &&
+pip3 install -U pynetworktables &&
+pip3 install -U wiringpi2 &&
+pip3 install termcolor &&
+pip3 install colour &&
+pip3 install libusb1
+pip3 install pyusb &&
+pip3 install pywinusb &&
+pip3 install websocket &&
+pip3 install portalocker &&
+pip3 install micropython-fcntl &&
+pip3 install PySimpleGUI &&
+pip3 install PyOpenGL PyOpenGL_accelerate &&
+pip3 install PyGame &&
+pip3 install PyQt5-sip &&
+pip3 install PyQt5 pytorch torchvision &&
+sudo apt install python3-venv -y &&
+sudo apt install python3-dev -y &&
+sudo apt install -y virtualenv &&
+mkdir environments &&
+cd environments &&
+python3 -m venv pytorch-env &&
+pip3 install pygame &&
+python3 -m pip install --upgrade pip &&
+python3 -m pip install pygame &&
+pip3 install sdl-config &&
+sudo apt-get install python-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsdl1.2-dev libsmpeg-dev python-numpy subversion libportmidi-dev ffmpeg libswscale-dev libavformat-dev libavcodec-dev - &&
+sudo apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6 -y &&
+sudo apt-get install python3-pygame &&
+pip3 install torch==1.5.0+cpu torchvision==0.6.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
+sudo apt-get install v4l-utils -y &&
+sudo v4l2-ctl --list-devices
+sudo v4l2-ctl --device=/dev/media0 --all
+sudo apt-get install swig libusb-1.0-0-dev g++ git build-essential -y  &&
+sudo add-apt-repository ppa:rock-core/qt4 &&
+sudo apt update &&
+sudo apt-get install qt4-dev-tools qt4-qmake qt4-default -y  &&
+sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui
+pip3 install PyGTK
+pip3 install -U argparse
+pip3 install -U \
+    -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 \
+    wxPython
 
 I copied libusb-1.0.dll from C:\Users\username\AppData\Roaming\Python\Python27\site-packages\libusb\_platform\_windows\x64\ to C:\Windows\System32\
 --------------------
@@ -35,3 +71,6 @@ https://osdn.net/projects/mingw/releases/p15691
 
 https://github.com/Gadgetoid/WiringPi2-Python
 
+###################################################
+conver ui to py
+python -m PyQt5.uic.pyuic -x main.ui -o main.py

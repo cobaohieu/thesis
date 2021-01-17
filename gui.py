@@ -4,11 +4,14 @@ import usb.core
 import usb.backend.libusb1
 import PyQt5
 from PyQt5 import *
+
+# from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5.QtMultimedia import *
-from PyQt5.QtMultimediaWidgets import *
+from PyQt5.QtWidgets import *
+# from PyQt5.QtMultimedia import *
+# from PyQt5.QtMultimediaWidgets import *
 
 
 class PixyCMU5(QMainWindow):
@@ -21,18 +24,25 @@ class PixyCMU5(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        self.setObjectName("Pixy Camera Control")
+        width = 677
+        height = 626
+        # PixyControl.resize(677, 626)
+        self.resize(width, height)
+        self.setMaximumWidth(width)
+        self.setMaximumHeight(height)
 
         palette = qApp.palette()
         palette.setColor(QPalette.Text, QColor(255, 0, 0))
 
-        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-
-        videoWidget = QVideoWidget()
-
-        self.playButton = QPushButton()
-        self.playButton.setEnabled(False)
-        self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
-        self.playButton.clicked.connect(self.play)
+        # self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        #
+        # videoWidget = QVideoWidget()
+        #
+        # self.playButton = QPushButton()
+        # self.playButton.setEnabled(False)
+        # self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+        # self.playButton.clicked.connect(self.play)
 
         self.positionSlider = QSlider(Qt.Horizontal)
         self.positionSlider.setRange(0, 0)
@@ -42,10 +52,10 @@ class PixyCMU5(QMainWindow):
         self.errorLabel.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
 
         # Create new action
-        openAction = QAction('Open', self) #QIcon('open.png'), 'Open', self)
-        openAction.setShortcut('Ctrl+O')
-        openAction.setStatusTip('Open movie')
-        openAction.triggered.connect(self.openFile)
+        # openAction = QAction('Open', self) #QIcon('open.png'), 'Open', self)
+        # openAction.setShortcut('Ctrl+O')
+        # openAction.setStatusTip('Open movie')
+        # openAction.triggered.connect(self.openFile)
 
         # Create configure action
         configure_action = QAction('Configure', self)
@@ -106,7 +116,7 @@ class PixyCMU5(QMainWindow):
         helpMenu = menuBar.addMenu('Help')
 
         # fileMenu.addAction(newAction)
-        fileMenu.addAction(openAction)
+        # fileMenu.addAction(openAction)
         fileMenu.addAction(configure_action)
         fileMenu.addAction(saveParameters_action)
         fileMenu.addAction(loadParameters_action)
@@ -129,21 +139,21 @@ class PixyCMU5(QMainWindow):
         # Create layouts to place inside widget
         controlLayout = QHBoxLayout()
         controlLayout.setContentsMargins(4, 0, 0, 120)
-        controlLayout.addWidget(self.playButton)
+        # controlLayout.addWidget(self.playButton)
         controlLayout.addWidget(self.positionSlider)
 
         layout = QVBoxLayout()
-        layout.addWidget(videoWidget)
+        # layout.addWidget(videoWidget)
         layout.addLayout(controlLayout)
         layout.addWidget(self.errorLabel)
 
         # Set widget to contain window contents
-        wid.setLayout(layout)
-        self.mediaPlayer.setVideoOutput(videoWidget)
-        self.mediaPlayer.stateChanged.connect(self.mediaStateChanged)
-        self.mediaPlayer.positionChanged.connect(self.positionChanged)
-        self.mediaPlayer.durationChanged.connect(self.durationChanged)
-        self.mediaPlayer.error.connect(self.handleError)
+        # wid.setLayout(layout)
+        # self.mediaPlayer.setVideoOutput(videoWidget)
+        # self.mediaPlayer.stateChanged.connect(self.mediaStateChanged)
+        # self.mediaPlayer.positionChanged.connect(self.positionChanged)
+        # self.mediaPlayer.durationChanged.connect(self.durationChanged)
+        # self.mediaPlayer.error.connect(self.handleError)
 
         self.b = QPlainTextEdit(self)
         self.b.setReadOnly(True)
@@ -173,14 +183,14 @@ class PixyCMU5(QMainWindow):
     def selected(self, q):
         print(q.text() + ' selected')
 
-    def openFile(self):
-        fileName, _ = QFileDialog.getOpenFileName(self, "Open Movie",
-                                                  QDir.homePath())
-
-        if fileName != '':
-            self.mediaPlayer.setMedia(
-                QMediaContent(QUrl.fromLocalFile(fileName)))
-            self.playButton.setEnabled(True)
+    # def openFile(self):
+    #     fileName, _ = QFileDialog.getOpenFileName(self, "Open Movie",
+    #                                               QDir.homePath())
+    #
+    #     if fileName != '':
+    #         self.mediaPlayer.setMedia(
+    #             QMediaContent(QUrl.fromLocalFile(fileName)))
+    #         self.playButton.setEnabled(True)
 
     def exitCall(self):
         qApp.quit()
@@ -216,11 +226,18 @@ class PixyCMU5(QMainWindow):
 
     # def usbConnect():
 
+def btn_about_pressed(self):
+    msg = QMessageBox()
+    msg.setWindowTitle("About")
+    msg.setText("Co Bao Hieu Thesis")
+    msg.setIcon(QMessageBox.Information)
+    msg.setStandardButtons(QMessageBox.OK)
+
+
 
 def main():
     app = QApplication(sys.argv)
     PixyControl = PixyCMU5()
-    PixyControl.resize(678, 626)
     PixyControl.show()
     sys.exit(app.exec_())
 

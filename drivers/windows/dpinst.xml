@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<dpinst>
-	<suppressAddRemovePrograms/>
-	<legacyMode/>
-	<search>
-		<subDirectory>*</subDirectory>
-	</search>
-</dpinst>

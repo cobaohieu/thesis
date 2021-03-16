@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sys
 import usb
 import usb.core
@@ -5,16 +7,36 @@ import usb.util
 import usb.backend.libusb1
 import cv2
 import numpy as numpy
+from time import gmtime, strftime
+import time
 
-devClass = usb.core.find(bDeviceClass=255)
-if devClass is None:
-    sys.stdout.write('error: No Pixy devices have been detected.')
+VENDOR_ID = 0xb1ac
+PRODUCT_ID = 0xf000
+BDeviceClass = 255
+
+print("Time",strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+
+devClass = usb.core.find(bDeviceClass=BDeviceClass)
+printers = usb.core.find(find_all=True, bDeviceClass=BDeviceClass)
 
 # SUBSYSTEM=="usb", ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", MODE="0666"
 
-dev = usb.core.find(idVendor=0xb1ac, idProduct=0xf000)
+# find our device
+dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
 if dev is None:
-    sys.stdout.write("error: No Pixy devices have been detected.")
+    # sys.exit("Could not find device")
+    # sys.stdout.write("error: No Pixy devices have been detected.")
+    raise RuntimeError('Pixy CMU5 camera device is not connected.')
+else:
+    print ("Pixy CMU5 camera device is connected!")
+
+reattach = False
+
+# was it found?
+if dev.is_kernel_driver_active(0):
+    reattach = True
+    dev.detach_kernel_driver(0)
+    dev.reset()
 
 print("deviceClass = " + str(dev.bDeviceClass))
 for cfg in dev:
@@ -32,13 +54,22 @@ for cfg in dev:
                                   str(ep.bmAttributes) + \
                                   '\n')
 
+# set the active configuration. With no arguments, the first
+# configuration will be the active one
 dev.set_configuration()
 
+# first endpoint
+endpoint = dev[0][(0,0)][0]
+
+
+
+# get an endpoint instance
 cfg = dev.get_active_configuration()
 interface_number = cfg[(0,0)].bInterfaceNumber
-alternate_settting = usb.control.get_interface(dev,interface_number)
-intf = usb.util.find_descriptor(cfg, bInterfaceNumber = interface_number, bAlternateSetting = 0)
+alternate_setting = usb.control.get_interface(dev,interface_number)
+intf = usb.util.find_descriptor(cfg, bInterfaceNumber = interface_number, bAlternateSetting = alternate_setting)
 alt = usb.util.find_descriptor(cfg, find_all=True, bInterfaceNumber=1)
+
 
 ep = usb.util.find_descriptor(
     intf,
@@ -46,31 +77,27 @@ ep = usb.util.find_descriptor(
     custom_match = \
     lambda e: \
         usb.util.endpoint_direction(e.bEndpointAddress) == \
-        usb.util.ENDPOINT_OUT
-)
-# assert ep is not None, \
-#        print("Success connect Pixy CMU5")
-#
-# ep.write('\x01')
+        usb.util.ENDPOINT_OUT)
+
 if (ep is None):
     print("Success connect Pixy CMU5")
-    cap = cv2.VideoCapture(0)
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi', fourcc,20.0, (640,400))
+    # content for do something
+    # data = dev.read(0x83,3*640*480,100)
+
+    # read a data packet
+    data = None
     while True:
-        ret, frame = cap.read()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        out.write(frame)
-        cv2.imshow('frame', frame)
-        cv2.imshow('gray', gray)
+        try:
+            data = dev.read(endpoint.bEndpointAddress,
+                                endpoint.wMaxPacketSize)
+            print("data")
 
-        if cv2.waitKey(0) & 0xFF == ord('q'):
-            break
+        except usb.core.USBError as e:
+            data = None
+            if e.args == ('Operation timed out',):
 
-    cap.release()
-    out.release()
-    cv2.destroyAllWindows()
+                continue
+
 else:
     print("error: No Pixy devices have been detected.")
-# ep.write('test')
 

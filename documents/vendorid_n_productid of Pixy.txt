@@ -1,0 +1,8 @@
+idVendor:           0xB1AC
+idProduct:          0xF000
+
+Decimal VendorID=45484 & ProductID=61440
+Hexadecimal VendorID=0xb1ac & ProductID=0xf000
+
+
+sudo modprobe usbserial vendor=0xb1ac product=0xf000

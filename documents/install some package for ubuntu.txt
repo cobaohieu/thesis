@@ -19,6 +19,7 @@ pip3 install websocket &&
 pip3 install portalocker &&
 pip3 install micropython-fcntl &&
 pip3 install PySimpleGUI &&
+conda install -c eaton-lab pypng &&
 pip3 install PyOpenGL PyOpenGL_accelerate &&
 pip3 install PyGame &&
 pip3 install PyQt5-sip &&

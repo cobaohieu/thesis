@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
 """
@@ -11,6 +11,7 @@ Id         : M3718007
 """
 
 import sys
+import os
 import PyQt5
 import time
 import datetime
@@ -28,23 +29,28 @@ import PyQt5.QtCore as QtCore
 import PyQt5.QtDBus as QtDBus
 import PyQt5.QtGui as QtGui
 import PyQt5.QtWidgets as QtWidgets
+import PyQt5.QtMultimedia as QtMultimedia
 # import PyQt5.QtNetwork as QtNetwork
 # import PyQt5.QtXmlPatterns as QtXmlPatterns
 # from PyQt5 import *
-
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider
-from PyQt5.QtCore import pyqtSlot, Qt
-from PyQt5.QtGui import QIcon, QFont, QImage, QPixmap
+# from PyQt5.QtCore import Qt, QString, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QScopedPointer, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QStringList, QList, QDebug, QMutexLocker, QTime
+from PyQt5.QtCore import Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime
+from PyQt5.QtGui import QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter
+from PyQt5.QtMultimedia import QVideoFrame, QVideoEncoderSettings, QVideoSurfaceFormat, QMediaContent, QMediaPlayer
+from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider, QAbstractButton, QCheckBox, QTableWidget, QButtonGroup, QDialogButtonBox, QSpacerItem, QGridLayout, QAction, QHeaderView, QVBoxLayout, QTextBrowser, QSizePolicy, QStyle
 from PyQt5.uic import loadUi
+
+
 
 # from main_ui import Ui_mainWindow
 # from about_ui import Ui_AboutForm
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
-from get_blocks import Blocks
+# from get_blocks import Blocks
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
-from pan_tilt import Blocks, Gimbal
+# from pan_tilt import Blocks, Gimbal
 
 
 class mainApp(QMainWindow, main_ui.Ui_mainWindow):

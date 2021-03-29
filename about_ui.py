@@ -38,7 +38,7 @@ class Ui_AboutForm(object):
         self.textEdit = QtWidgets.QTextBrowser(self.layoutWidget)
         self.textEdit.setObjectName("textEdit")
         self.horizontalLayout.addWidget(self.textEdit)
-        AboutForm.setCentralWidget(self.centralwidget)
+        # AboutForm.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(AboutForm)
         QtCore.QMetaObject.connectSlotsByName(AboutForm)
@@ -50,11 +50,11 @@ class Ui_AboutForm(object):
     # def __init__(self):
     #     super().__init__()
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AboutForm = QtWidgets.QMainWindow()
-    ui = Ui_AboutForm()
-    ui.setupUi(AboutForm)
-    AboutForm.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     AboutForm = QtWidgets.QMainWindow()
+#     ui = Ui_AboutForm()
+#     ui.setupUi(AboutForm)
+#     AboutForm.show()
+#     sys.exit(app.exec_())

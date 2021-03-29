@@ -22,29 +22,31 @@ import usb
 # import config_ui
 # import detect
 import main_ui
-# import about_ui
+import config_ui
+import about_ui
 
 # import PyQt5.Qt as Qt
 import PyQt5.QtCore as QtCore
 import PyQt5.QtDBus as QtDBus
 import PyQt5.QtGui as QtGui
 import PyQt5.QtWidgets as QtWidgets
-import PyQt5.QtMultimedia as QtMultimedia
+# import PyQt5.QtMultimedia as QtMultimedia
 # import PyQt5.QtNetwork as QtNetwork
 # import PyQt5.QtXmlPatterns as QtXmlPatterns
 # from PyQt5 import *
 # from PyQt5.QtCore import Qt, QString, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QScopedPointer, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QStringList, QList, QDebug, QMutexLocker, QTime
 from PyQt5.QtCore import Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime
 from PyQt5.QtGui import QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter
-from PyQt5.QtMultimedia import QVideoFrame, QVideoEncoderSettings, QVideoSurfaceFormat, QMediaContent, QMediaPlayer
-from PyQt5.QtMultimediaWidgets import QVideoWidget
+# from PyQt5.QtMultimedia import QVideoFrame, QVideoEncoderSettings, QVideoSurfaceFormat, QMediaContent, QMediaPlayer
+# from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider, QAbstractButton, QCheckBox, QTableWidget, QButtonGroup, QDialogButtonBox, QSpacerItem, QGridLayout, QAction, QHeaderView, QVBoxLayout, QTextBrowser, QSizePolicy, QStyle
 from PyQt5.uic import loadUi
 
 
 
-# from main_ui import Ui_mainWindow
-# from about_ui import Ui_AboutForm
+from main_ui import Ui_mainWindow as Ui_mainWindow
+from config_ui import Ui_ConfigForm as Ui_ConfigForm
+from about_ui import Ui_AboutForm as Ui_AboutForm
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
 # from get_blocks import Blocks
@@ -53,9 +55,19 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
 # from pan_tilt import Blocks, Gimbal
 
 
-class mainApp(QMainWindow, main_ui.Ui_mainWindow):
+class configForm(QDialog, config_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
-        super(mainApp, self).__init__(parent)
+        QDialog.__init__(self, parent=parent)
+        self.setupUi(self)
+
+class aboutForm(QDialog, about_ui.Ui_AboutForm):
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent=parent)
+        self.setupUi(self)
+
+class mainForm(QMainWindow, main_ui.Ui_mainWindow):
+    def __init__(self, parent=None):
+        super(mainForm, self).__init__(parent)
         self.setupUi(self)
 
         ################## File ##################
@@ -68,7 +80,7 @@ class mainApp(QMainWindow, main_ui.Ui_mainWindow):
         self.actionSave_Pixy_parameters.triggered.connect(self.save_pixy_parameters_function)
 
         # Load Pixy Parameter
-        self.actionLoad_Pixy_parameters.setShortcut('Ctrl+L')
+        self.actionLoad_Pixy_parameters.setShortcut('Ctrl+O')
         self.actionLoad_Pixy_parameters.triggered.connect(self.load_pixy_parameters_function)
 
         # Exit
@@ -128,18 +140,43 @@ class mainApp(QMainWindow, main_ui.Ui_mainWindow):
         # #
         # QMessageBox.Cancel
         # QMessageBox.RejectRole
-        print('Your code here')
+        self.form = configForm()
+        self.form.show()
+        print('Your code here for modify color text box|slider and button Apply|Cancel|OK')
 
     # Save parameter fucntion:
     #   Store all hex color of Red Green Blue values in a text file
     def save_pixy_parameters_function(self):
-        print('Your code here')
+        self.saveFileDialog()
+        print('Your code here process print parameters to a file *.rpm')
 
     # Load parameter fucntion:
     #   Load a text file which contain all hex color of Red Green Blue values
     #   and show it on camera preview
     def load_pixy_parameters_function(self):
-        print('Your code here')
+        self.openFileNameDialog()
+        print('Your code here process load input parameter to camera and show in video view')
+
+    def openFileNameDialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(self, "Open File", "", "All Files (*);;PixyMon Files (*.prm)", options=options)
+        if fileName:
+            print(fileName)
+
+    def openFilesDialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        files, _ = QFileDialog.getOpenFileNames(self, "Open Files", "", "All Files (*);;PixyMon Files (*.prm)", options=options)
+        if files:
+            print(files)
+
+    def saveFileDialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(self, "Save", "", "All Files (*);;PixyMon Files (*.prm)", options=options)
+        if fileName:
+            print(fileName)
 
     # Exit dialog:
     #   A form which show Yes or No when you want to exit the app
@@ -158,7 +195,7 @@ class mainApp(QMainWindow, main_ui.Ui_mainWindow):
     #   Allow turn on camera or pause camera like Play/Pause in music
     #   You could you once space to start cmaera and twice space to pause camera
     def run_stop_function(self):
-        print('Your code here')
+        print('Your code here to show camera view on video view')
 
     # default program function:
     #   Don't know what to descire the function
@@ -196,10 +233,11 @@ class mainApp(QMainWindow, main_ui.Ui_mainWindow):
     def about_dialog(self):
         QMessageBox.information(self, "About", "Pixy Camera Control (2020)\nVersion: 1.0.0.0\nDate: 03/2021\nDesigned by Co Bao Hieu | M3718007")
 
+
 ################## Main ##################
 def main():
     app = QApplication(sys.argv)
-    form = mainApp()
+    form = mainForm()
     form.show()
     app.exec_()
 

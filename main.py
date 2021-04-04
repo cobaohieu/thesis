@@ -16,14 +16,26 @@ import PyQt5
 import time
 import datetime
 import numpy as np
+
 import usb
+import usb.core
+import usb.util
+import usb.backend.libusb1
+# import cv2
+import numpy as numpy
+from time import gmtime, strftime
+import time
 
 # import config
 # import config_ui
 # import detect
 import main_ui
+import main_w_textedit
 import config_ui
+import configcolor_ui
 import about_ui
+# import detect
+
 
 # import PyQt5.Qt as Qt
 import PyQt5.QtCore as QtCore
@@ -35,18 +47,22 @@ import PyQt5.QtWidgets as QtWidgets
 # import PyQt5.QtXmlPatterns as QtXmlPatterns
 # from PyQt5 import *
 # from PyQt5.QtCore import Qt, QString, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QScopedPointer, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QStringList, QList, QDebug, QMutexLocker, QTime
-from PyQt5.QtCore import Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime
-from PyQt5.QtGui import QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter
+from PyQt5.QtCore import (Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime, QTimer, QFile)
+
+from PyQt5.QtGui import (QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter, QMouseEvent, QKeyEvent, QTextCursor, QTextBlock)
+
 # from PyQt5.QtMultimedia import QVideoFrame, QVideoEncoderSettings, QVideoSurfaceFormat, QMediaContent, QMediaPlayer
 # from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider, QAbstractButton, QCheckBox, QTableWidget, QButtonGroup, QDialogButtonBox, QSpacerItem, QGridLayout, QAction, QHeaderView, QVBoxLayout, QTextBrowser, QSizePolicy, QStyle
+
+from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider, QAbstractButton, QCheckBox, QTableWidget, QButtonGroup, QDialogButtonBox, QSpacerItem, QGridLayout, QAction, QHeaderView, QVBoxLayout, QTextBrowser, QSizePolicy, QStyle, QPlainTextEdit, QScrollBar)
+
 from PyQt5.uic import loadUi
-
-
 
 from main_ui import Ui_mainWindow as Ui_mainWindow
 from config_ui import Ui_ConfigForm as Ui_ConfigForm
+from configcolor_ui import Ui_ConfigForm as Ui_ConfigColorForm
 from about_ui import Ui_AboutForm as Ui_AboutForm
+# from detect import
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
 # from get_blocks import Blocks
@@ -54,22 +70,27 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
 # from pan_tilt import Blocks, Gimbal
 
+class aboutForm(QDialog, about_ui.Ui_AboutForm):
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent=parent)
+        self.setupUi(self)
 
 class configForm(QDialog, config_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
 
-class aboutForm(QDialog, about_ui.Ui_AboutForm):
+class configColorForm(QDialog, configcolor_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
 
-class mainForm(QMainWindow, main_ui.Ui_mainWindow):
+class mainForm(QMainWindow, main_w_textedit.Ui_mainWindow):
     def __init__(self, parent=None):
         super(mainForm, self).__init__(parent)
         self.setupUi(self)
 
+        self.detectUsb()
         ################## File ##################
         # Config dialog
         self.actionConfigure.setShortcut('Ctrl+,')
@@ -140,7 +161,8 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         # #
         # QMessageBox.Cancel
         # QMessageBox.RejectRole
-        self.form = configForm()
+        # self.form = configForm()
+        self.form = configColorForm()
         self.form.show()
         print('Your code here for modify color text box|slider and button Apply|Cancel|OK')
 
@@ -154,20 +176,39 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   Load a text file which contain all hex color of Red Green Blue values
     #   and show it on camera preview
     def load_pixy_parameters_function(self):
-        self.openFileNameDialog()
+        # self.openFileNameDialog()
+        self.getParameterFile()
         print('Your code here process load input parameter to camera and show in video view')
+
+    def getParameterFile(self):
+        options = QFileDialog()
+        options.setFileMode(QFileDialog.AnyFile)
+        options.setFilter(QDir.Files)
+
+        if options.exec_():
+            fileName = options.selectedFiles()
+
+            if fileName[0].endswith('.prm'):
+                with open(fileName[0], 'r') as f:
+                    data = f.read()
+                    self.plainTextEdit.setPlainText(data)
+                    f.close()
 
     def openFileNameDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "Open File", "", "All Files (*);;PixyMon Files (*.prm)", options=options)
-        if fileName:
+        fileName, _ = QFileDialog.getOpenFileName(self, "Open File", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
+        if fileName[0]:
             print(fileName)
+            with open(fileName[0], 'r') as f:
+                    data = f.read()
+                    self.plainTextEdit.setPlainText(data)
+                    f.close()
 
     def openFilesDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        files, _ = QFileDialog.getOpenFileNames(self, "Open Files", "", "All Files (*);;PixyMon Files (*.prm)", options=options)
+        files, _ = QFileDialog.getOpenFileNames(self, "Open Files", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
         if files:
             print(files)
 
@@ -195,6 +236,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   Allow turn on camera or pause camera like Play/Pause in music
     #   You could you once space to start cmaera and twice space to pause camera
     def run_stop_function(self):
+
         print('Your code here to show camera view on video view')
 
     # default program function:
@@ -233,10 +275,113 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def about_dialog(self):
         QMessageBox.information(self, "About", "Pixy Camera Control (2020)\nVersion: 1.0.0.0\nDate: 03/2021\nDesigned by Co Bao Hieu | M3718007")
 
+    ################## Support ##################
+    def detectUsb(self):
+        VENDOR_ID = 0xb1ac
+        PRODUCT_ID = 0xf000
+        BDeviceClass = 255
+        devClass = usb.core.find(bDeviceClass=BDeviceClass)
+        printers = usb.core.find(find_all=True, bDeviceClass=BDeviceClass)
+
+        # SUBSYSTEM=="usb", ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", MODE="0666"
+
+        # find our device
+        dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
+        if dev is None:
+            # sys.exit("Could not find device")
+            # sys.stdout.write("error: No Pixy devices have been detected.")
+            # raise RuntimeError('Pixy CMU5 camera device is not found.')
+            # print("Pixy CMU5 camera device is not found.")
+            data = "Pixy CMU5 camera device is not found."
+            self.plainTextEdit.setPlainText(data)
+        else:
+            print("Pixy CMU5 camera device is found!")
+
+        # reattach = False
+
+        # # was it found?
+        # if dev.is_kernel_driver_active(0):
+        #     reattach = True
+        #     dev.detach_kernel_driver(0)
+        #     dev.reset()
+
+        # print("deviceClass = " + str(dev.bDeviceClass))
+        # for cfg in dev:
+        #     sys.stdout.write("configuration: " + str(cfg.bConfigurationValue) + '\n')
+        #     for intf in cfg:
+        #         sys.stdout.write('\tInterface: ' + \
+        #                             str(intf.bInterfaceNumber) + \
+        #                             ',' + \
+        #                             str(intf.bAlternateSetting) + \
+        #                             '\n')
+        #         for ep in intf:
+        #             sys.stdout.write('\t\tEndpoint: ' + \
+        #                                 str(ep.bEndpointAddress) + \
+        #                                 ',' + \
+        #                                 str(ep.bmAttributes) + \
+        #                                 '\n')
+
+        # # set the active configuration. With no arguments, the first
+        # # configuration will be the active one
+        # dev.set_configuration()
+
+
+        # for bRequest in range(255):
+        #     try:
+        #         ret = dev.ctrl_transfer(0xC0, bRequest, 0, 0, 1)
+        #         print("bRequest ",bRequest)
+        #         print(ret)
+        #     except:
+        #         # failed to get data for this request
+        #         pass
+
+        # # first endpoint
+        # endpoint = dev[0][(0,0)][0]
+
+        # # get an endpoint instance
+        # cfg = dev.get_active_configuration()
+        # interface_number = cfg[(0,0)].bInterfaceNumber
+        # alternate_setting = usb.control.get_interface(dev,interface_number)
+        # intf = usb.util.find_descriptor(cfg, bInterfaceNumber = interface_number, bAlternateSetting = alternate_setting)
+        # alt = usb.util.find_descriptor(cfg, find_all=True, bInterfaceNumber=1)
+
+
+        # ep = usb.util.find_descriptor(
+        #     intf,
+        #     # match the first OUT endpoint
+        #     custom_match = \
+        #     lambda e: \
+        #         usb.util.endpoint_direction(e.bEndpointAddress) == \
+        #         usb.util.ENDPOINT_OUT)
+
+        # if (ep is None):
+        #     print("Success connect Pixy CMU5")
+        #     # content for do something
+
+        # else:
+        #     print("error: No Pixy devices have been detected.")
+
+# printers = usb.core.find(find_all=1, custom_match=find_all(7))
+
+def qt_message_handler(mode, context, message):
+    if mode == QtCore.QtInfoMsg:
+        mode = 'INFO'
+    elif mode == QtCore.QtWarningMsg:
+        mode = 'WARNING'
+    elif mode == QtCore.QtCriticalMsg:
+        mode = 'CRITICAL'
+    elif mode == QtCore.QtFatalMsg:
+        mode = 'FATAL'
+    else:
+        mode = 'DEBUG'
+    print('qt_message_handler: line: %d, func: %s(), file: %s' % (context.line, context.function, context.file))
+    print('  %s: %s\n' % (mode, message))
+QtCore.qInstallMessageHandler(qt_message_handler)
 
 ################## Main ##################
 def main():
     app = QApplication(sys.argv)
+    QtCore.qDebug('Something informative')
     form = mainForm()
     form.show()
     app.exec_()

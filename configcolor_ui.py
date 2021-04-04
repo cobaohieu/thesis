@@ -81,7 +81,7 @@ class Ui_ConfigForm(object):
         self.label_red.setGeometry(QtCore.QRect(19, 10, 26, 21))
         self.label_red.setObjectName("label_red")
         self.tabWidget.addTab(self.colorTab, "")
-        ConfigForm.setCentralWidget(self.centralwidget)
+        # ConfigForm.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(ConfigForm)
         self.tabWidget.setCurrentIndex(0)
@@ -96,11 +96,11 @@ class Ui_ConfigForm(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.colorTab), _translate("ConfigForm", "Colors"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    ConfigForm = QtWidgets.QMainWindow()
-    ui = Ui_ConfigForm()
-    ui.setupUi(ConfigForm)
-    ConfigForm.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     ConfigForm = QtWidgets.QMainWindow()
+#     ui = Ui_ConfigForm()
+#     ui.setupUi(ConfigForm)
+#     ConfigForm.show()
+#     sys.exit(app.exec_())

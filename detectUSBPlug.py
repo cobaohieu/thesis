@@ -5,7 +5,7 @@ import usb
 import usb.core
 import usb.util
 import usb.backend.libusb1
-import cv2
+# import cv2
 import numpy as numpy
 from time import gmtime, strftime
 import time

@@ -23,6 +23,7 @@ import usb
 # import detect
 import main_ui
 import config_ui
+import configcolor_ui
 import about_ui
 
 # import PyQt5.Qt as Qt
@@ -35,17 +36,22 @@ import PyQt5.QtWidgets as QtWidgets
 # import PyQt5.QtXmlPatterns as QtXmlPatterns
 # from PyQt5 import *
 # from PyQt5.QtCore import Qt, QString, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QScopedPointer, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QStringList, QList, QDebug, QMutexLocker, QTime
-from PyQt5.QtCore import Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime
-from PyQt5.QtGui import QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter
+from PyQt5.QtCore import Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime, QTimer, QFile
+
+from PyQt5.QtGui import QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter, QMouseEvent, QKeyEvent, QTextCursor, QTextBlock
+
 # from PyQt5.QtMultimedia import QVideoFrame, QVideoEncoderSettings, QVideoSurfaceFormat, QMediaContent, QMediaPlayer
 # from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider, QAbstractButton, QCheckBox, QTableWidget, QButtonGroup, QDialogButtonBox, QSpacerItem, QGridLayout, QAction, QHeaderView, QVBoxLayout, QTextBrowser, QSizePolicy, QStyle
+
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QFileDialog, QInputDialog, QGraphicsRectItem, QGraphicsScene, QMessageBox, QMainWindow, QToolTip, QPushButton, QLineEdit, QDialog, QHBoxLayout, QSlider, QAbstractButton, QCheckBox, QTableWidget, QButtonGroup, QDialogButtonBox, QSpacerItem, QGridLayout, QAction, QHeaderView, QVBoxLayout, QTextBrowser, QSizePolicy, QStyle, QPlainTextEdit, QScrollBar
+
 from PyQt5.uic import loadUi
 
 
 
 from main_ui import Ui_mainWindow as Ui_mainWindow
 from config_ui import Ui_ConfigForm as Ui_ConfigForm
+from configcolor_ui import Ui_ConfigForm as Ui_ConfigColorForm
 from about_ui import Ui_AboutForm as Ui_AboutForm
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
@@ -55,12 +61,17 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
 # from pan_tilt import Blocks, Gimbal
 
 
+class aboutForm(QDialog, about_ui.Ui_AboutForm):
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent=parent)
+        self.setupUi(self)
+
 class configForm(QDialog, config_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
 
-class aboutForm(QDialog, about_ui.Ui_AboutForm):
+class configColorForm(QDialog, configcolor_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
@@ -140,7 +151,8 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         # #
         # QMessageBox.Cancel
         # QMessageBox.RejectRole
-        self.form = configForm()
+        # self.form = configForm()
+        self.form = configColorForm()
         self.form.show()
         print('Your code here for modify color text box|slider and button Apply|Cancel|OK')
 
@@ -195,6 +207,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   Allow turn on camera or pause camera like Play/Pause in music
     #   You could you once space to start cmaera and twice space to pause camera
     def run_stop_function(self):
+
         print('Your code here to show camera view on video view')
 
     # default program function:
@@ -233,10 +246,25 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def about_dialog(self):
         QMessageBox.information(self, "About", "Pixy Camera Control (2020)\nVersion: 1.0.0.0\nDate: 03/2021\nDesigned by Co Bao Hieu | M3718007")
 
+def qt_message_handler(mode, context, message):
+    if mode == QtCore.QtInfoMsg:
+        mode = 'INFO'
+    elif mode == QtCore.QtWarningMsg:
+        mode = 'WARNING'
+    elif mode == QtCore.QtCriticalMsg:
+        mode = 'CRITICAL'
+    elif mode == QtCore.QtFatalMsg:
+        mode = 'FATAL'
+    else:
+        mode = 'DEBUG'
+    print('qt_message_handler: line: %d, func: %s(), file: %s' % (context.line, context.function, context.file))
+    print('  %s: %s\n' % (mode, message))
+QtCore.qInstallMessageHandler(qt_message_handler)
 
 ################## Main ##################
 def main():
     app = QApplication(sys.argv)
+    QtCore.qDebug('Something informative')
     form = mainForm()
     form.show()
     app.exec_()

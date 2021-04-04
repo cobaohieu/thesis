@@ -81,7 +81,7 @@ class Ui_ConfigForm(object):
         self.label_red.setGeometry(QtCore.QRect(19, 10, 26, 21))
         self.label_red.setObjectName("label_red")
         self.tabWidget.addTab(self.colorTab, "")
-        ConfigForm.setCentralWidget(self.centralwidget)
+        # ConfigForm.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(ConfigForm)
         self.tabWidget.setCurrentIndex(0)

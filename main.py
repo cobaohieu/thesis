@@ -75,6 +75,11 @@ class aboutForm(QDialog, about_ui.Ui_AboutForm):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
 
+class aboutForm(QDialog, about_ui.Ui_AboutForm):
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent=parent)
+        self.setupUi(self)
+
 class configForm(QDialog, config_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)

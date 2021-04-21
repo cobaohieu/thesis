@@ -28,13 +28,13 @@ import argparse
 import imutils
 # import pyzar
 
-# import config
+
 # import config_ui
 # import detect
 import main_ui
 # import main_w_textedit
+# import config_ui
 import config_ui
-import configcolor_ui
 import about_ui
 # import detect
 
@@ -74,8 +74,7 @@ from PyQt5.QtXml import (QDomDocument, QDomElement)
 from PyQt5.uic import loadUi
 
 from main_ui import Ui_mainWindow as Ui_mainWindow
-from config_ui import Ui_ConfigForm as Ui_ConfigForm
-from configcolor_ui import Ui_ConfigForm as Ui_ConfigColorForm
+from config_ui import Ui_ConfigForm as Ui_ConfigColorForm
 from about_ui import Ui_AboutForm as Ui_AboutForm
 # from detect import
 
@@ -275,14 +274,8 @@ class aboutForm(QDialog, about_ui.Ui_AboutForm):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
 
-################## Config class##################
-class configForm(QDialog, config_ui.Ui_ConfigForm):
-    def __init__(self, parent=None):
-        QDialog.__init__(self, parent=parent)
-        self.setupUi(self)
-
 ################## Config class ##################
-class configColorForm(QDialog, configcolor_ui.Ui_ConfigForm):
+class configColorForm(QDialog, config_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)

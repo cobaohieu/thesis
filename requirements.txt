@@ -1,0 +1,17 @@
+PyGame
+PyOpenGL
+PyOpenGL_accelerate
+PyQt5
+PyQt5-sip
+imutils
+libusb
+libusb1
+numpy
+opencv-python
+pygame
+pytorch
+pyudev
+pyusb
+pyzbar
+torch
+torchvision

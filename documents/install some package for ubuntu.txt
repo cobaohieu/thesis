@@ -16,7 +16,7 @@ pip3 install libusb1
 pip3 install pyusb &&
 pip3 install pywinusb &&
 pip3 install websocket &&
-pip3 install portalocker &&
+pip3 install portlaocker &&
 pip3 install micropython-fcntl &&
 pip3 install PySimpleGUI &&
 conda install -c eaton-lab pypng &&

@@ -9,52 +9,280 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import (QWidget, QSlider, QApplication,
+                             QHBoxLayout, QVBoxLayout)
+from PyQt5.QtCore import QObject, Qt, pyqtSignal
+from PyQt5.QtGui import QPainter, QFont, QColor, QPen
+import sys
 
+class Communicate(QObject):
+    updateBW = pyqtSignal(int)
+
+
+class RedSlider(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setMinimumSize(0, 30)
+        self.value = 0
+        self.num = [55, 105, 155, 205, 255]
+
+    def setValue(self, value):
+        self.value = value
+
+    def paintEvent(self, e):
+        qp = QPainter()
+        qp.begin(self)
+        self.drawWidget(qp)
+        qp.end()
+
+    def drawWidget(self, qp):
+        MAX_CAPACITY = 255
+        OVER_CAPACITY = 305
+
+        font = QFont('Google Sans', 10, QFont.Light)
+        qp.setFont(font)
+
+        size = self.size()
+        w = size.width()
+        h = size.height()
+
+        step = int(round(w / 6))
+
+        till = int(((w / OVER_CAPACITY) * self.value))
+        full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))
+
+        if self.value >= MAX_CAPACITY:
+
+            qp.setPen(QColor(255, 255, 255))
+            qp.setBrush(QColor(176, 0, 32))
+
+            qp.drawRect(0, 0, full, h)
+            qp.setPen(QColor(255, 175, 175))
+            qp.setBrush(QColor(255, 175, 175))
+            qp.drawRect(full, 0, till - full, h)
+
+        else:
+
+            qp.setPen(QColor(255, 255, 255))
+            qp.setBrush(QColor(176, 0, 32))
+            qp.drawRect(0, 0, till, h)
+
+        pen = QPen(QColor(20, 20, 20), 1, Qt.SolidLine)
+
+        qp.setPen(pen)
+        qp.setBrush(Qt.NoBrush)
+        qp.drawRect(0, 0, w - 1, h - 1)
+
+        j = 0
+
+        for i in range(step, 6 * step, step):
+
+            qp.drawLine(i, 0, i, 5)
+            metrics = qp.fontMetrics()
+            fw = metrics.width(str(self.num[j]))
+
+            x, y = int(i - fw/2), int(h / 2)
+            qp.drawText(x, y, str(self.num[j]))
+            j = j + 1
+
+
+class GreenSlider(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setMinimumSize(0, 30)
+        self.value = 0
+        self.num = [55, 105, 155, 205, 255]
+
+    def setValue(self, value):
+        self.value = value
+
+    def paintEvent(self, e):
+        qp = QPainter()
+        qp.begin(self)
+        self.drawWidget(qp)
+        qp.end()
+
+    def drawWidget(self, qp):
+        MAX_CAPACITY = 255
+        OVER_CAPACITY = 305
+
+        font = QFont('Google Sans', 10, QFont.Light)
+        qp.setFont(font)
+
+        size = self.size()
+        w = size.width()
+        h = size.height()
+
+        step = int(round(w / 6))
+
+        till = int(((w / OVER_CAPACITY) * self.value))
+        full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))
+
+        if self.value >= MAX_CAPACITY:
+
+            qp.setPen(QColor(255, 255, 255))
+            qp.setBrush(QColor(1, 135, 134))
+
+            qp.drawRect(0, 0, full, h)
+            qp.setPen(QColor(255, 175, 175))
+            qp.setBrush(QColor(255, 175, 175))
+            qp.drawRect(full, 0, till - full, h)
+
+        else:
+
+            qp.setPen(QColor(255, 255, 255))
+            qp.setBrush(QColor(1, 135, 134))
+            qp.drawRect(0, 0, till, h)
+
+        pen = QPen(QColor(20, 20, 20), 1, Qt.SolidLine)
+
+        qp.setPen(pen)
+        qp.setBrush(Qt.NoBrush)
+        qp.drawRect(0, 0, w - 1, h - 1)
+
+        j = 0
+
+        for i in range(step, 6 * step, step):
+
+            qp.drawLine(i, 0, i, 5)
+            metrics = qp.fontMetrics()
+            fw = metrics.width(str(self.num[j]))
+
+            x, y = int(i - fw/2), int(h / 2)
+            qp.drawText(x, y, str(self.num[j]))
+            j = j + 1
+
+class BlueSlider(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setMinimumSize(0, 30)
+        self.value = 0
+        self.num = [55, 105, 155, 205, 255]
+
+    def setValue(self, value):
+        self.value = value
+
+    def paintEvent(self, e):
+        qp = QPainter()
+        qp.begin(self)
+        self.drawWidget(qp)
+        qp.end()
+
+    def drawWidget(self, qp):
+        MAX_CAPACITY = 255
+        OVER_CAPACITY = 305
+
+        font = QFont('Google Sans', 10, QFont.Light)
+        qp.setFont(font)
+
+        size = self.size()
+        w = size.width()
+        h = size.height()
+
+        step = int(round(w / 6))
+
+        till = int(((w / OVER_CAPACITY) * self.value))
+        full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))
+
+        if self.value >= MAX_CAPACITY:
+            qp.setPen(QColor(255, 255, 255))
+            qp.setBrush(QColor(3, 54, 255))
+
+            qp.drawRect(0, 0, full, h)
+            qp.setPen(QColor(255, 175, 175))
+            qp.setBrush(QColor(255, 175, 175))
+            qp.drawRect(full, 0, till - full, h)
+
+        else:
+            qp.setPen(QColor(255, 255, 255))
+            qp.setBrush(QColor(3, 54, 255))
+            qp.drawRect(0, 0, till, h)
+
+        pen = QPen(QColor(20, 20, 20), 1, Qt.SolidLine)
+
+        qp.setPen(pen)
+        qp.setBrush(Qt.NoBrush)
+        qp.drawRect(0, 0, w - 1, h - 1)
+
+        j = 0
+
+        for i in range(step, 6 * step, step):
+
+            qp.drawLine(i, 0, i, 5)
+            metrics = qp.fontMetrics()
+            fw = metrics.width(str(self.num[j]))
+
+            x, y = int(i - fw/2), int(h / 2)
+            qp.drawText(x, y, str(self.num[j]))
+            j = j + 1
 
 class Ui_ConfigForm(object):
     def setupUi(self, ConfigForm):
         ConfigForm.setObjectName("ConfigForm")
-        ConfigForm.resize(376, 161)
+        ConfigForm.resize(376, 352)
+        OVER_CAPACITY = 255
+        # ConfigForm.resize(376, 161)
         self.centralwidget = QtWidgets.QWidget(ConfigForm)
         self.centralwidget.setObjectName("centralwidget")
+        ###
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 375, 161))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 375, 351))
         self.tabWidget.setObjectName("tabWidget")
+        ###
         self.colorTab = QtWidgets.QWidget()
         self.colorTab.setObjectName("colorTab")
+        ###
         self.gridLayoutWidget = QtWidgets.QWidget(self.colorTab)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(0, 0, 371, 131))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.textBrowser_red = QtWidgets.QTextBrowser(self.colorTab)
-        self.textBrowser_red.setGeometry(QtCore.QRect(310, 10, 51, 21))
-        self.textBrowser_red.setInputMethodHints(QtCore.Qt.ImhFormattedNumbersOnly)
-        self.textBrowser_red.setLineWidth(0)
-        self.textBrowser_red.setMidLineWidth(0)
-        self.textBrowser_red.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
-        self.textBrowser_red.setReadOnly(False)
-        self.textBrowser_red.setObjectName("textBrowser_red")
-        self.horizontalSlider_blue = QtWidgets.QSlider(self.colorTab)
-        self.horizontalSlider_blue.setGeometry(QtCore.QRect(50, 77, 255, 13))
-        self.horizontalSlider_blue.setMaximum(255)
-        self.horizontalSlider_blue.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_blue.setObjectName("horizontalSlider_blue")
-        self.label_blue = QtWidgets.QLabel(self.colorTab)
-        self.label_blue.setGeometry(QtCore.QRect(17, 72, 31, 21))
-        self.label_blue.setObjectName("label_blue")
-        self.horizontalSlider_green = QtWidgets.QSlider(self.colorTab)
-        self.horizontalSlider_green.setGeometry(QtCore.QRect(50, 46, 255, 13))
-        self.horizontalSlider_green.setMaximum(255)
-        self.horizontalSlider_green.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_green.setObjectName("horizontalSlider_green")
+        ### Blue
+        horizontalSlider_blue = QtWidgets.QSlider(self.colorTab)
+        # horizontalSlider_blue.setGeometry(QtCore.QRect(50, 77, 255, 13))
+        # horizontalSlider_blue.setMaximum(255)
+        # horizontalSlider_blue.setOrientation(QtCore.Qt.Horizontal)
+        # horizontalSlider_blue.setObjectName("horizontalSlider_blue")
+        horizontalSlider_blue = QSlider(Qt.Horizontal, self)
+        horizontalSlider_blue.setFocusPolicy(Qt.NoFocus)
+        horizontalSlider_blue.setRange(1, OVER_CAPACITY)
+        horizontalSlider_blue.setValue(0)
+        horizontalSlider_blue.setGeometry(50, 102, 255, 13)
+        horizontalSlider_blue.valueChanged[int].connect(self.changeValueBlue)
+        ###
         self.textBrowser_blue = QtWidgets.QTextBrowser(self.colorTab)
         self.textBrowser_blue.setGeometry(QtCore.QRect(310, 72, 51, 21))
         self.textBrowser_blue.setInputMethodHints(QtCore.Qt.ImhPreferNumbers)
         self.textBrowser_blue.setLineWidth(0)
         self.textBrowser_blue.setReadOnly(False)
         self.textBrowser_blue.setObjectName("textBrowser_blue")
+        ###
+        self.label_blue = QtWidgets.QLabel(self.colorTab)
+        self.label_blue.setGeometry(QtCore.QRect(17, 72, 31, 21))
+        self.label_blue.setObjectName("label_blue")
+        ### Green
+        horizontalSlider_green = QtWidgets.QSlider(self.colorTab)
+        # horizontalSlider_green.setGeometry(QtCore.QRect(50, 46, 255, 13))
+        # horizontalSlider_green.setMaximum(255)
+        # horizontalSlider_green.setOrientation(QtCore.Qt.Horizontal)
+        # horizontalSlider_green.setObjectName("horizontalSlider_green")
+        horizontalSlider_green = QSlider(Qt.Horizontal, self)
+        horizontalSlider_green.setFocusPolicy(Qt.NoFocus)
+        horizontalSlider_green.setRange(1, OVER_CAPACITY)
+        horizontalSlider_green.setValue(0)
+        horizontalSlider_green.setGeometry(50, 71, 255, 13)
+        horizontalSlider_green.valueChanged[int].connect(self.changeValueGreen)
+        ###
         self.textBrowser_green = QtWidgets.QTextBrowser(self.colorTab)
         self.textBrowser_green.setGeometry(QtCore.QRect(310, 42, 51, 21))
         self.textBrowser_green.setInputMethodHints(QtCore.Qt.ImhPreferNumbers)
@@ -64,28 +292,115 @@ class Ui_ConfigForm(object):
         self.textBrowser_green.setTabChangesFocus(False)
         self.textBrowser_green.setReadOnly(False)
         self.textBrowser_green.setObjectName("textBrowser_green")
+        ###
         self.label_green = QtWidgets.QLabel(self.colorTab)
         self.label_green.setGeometry(QtCore.QRect(7, 42, 40, 21))
         self.label_green.setObjectName("label_green")
-        self.horizontalSlider_red = QtWidgets.QSlider(self.colorTab)
-        self.horizontalSlider_red.setGeometry(QtCore.QRect(50, 14, 255, 13))
-        self.horizontalSlider_red.setMaximum(255)
-        self.horizontalSlider_red.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_red.setObjectName("horizontalSlider_red")
-        self.ACOButton = QtWidgets.QDialogButtonBox(self.colorTab)
-        self.ACOButton.setGeometry(QtCore.QRect(30, 100, 331, 28))
-        self.ACOButton.setOrientation(QtCore.Qt.Horizontal)
-        self.ACOButton.setStandardButtons(QtWidgets.QDialogButtonBox.Apply|QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.ACOButton.setObjectName("ACOButton")
+        ### Red
+        horizontalSlider_red = QtWidgets.QSlider(self.colorTab)
+        # horizontalSlider_red.setGeometry(QtCore.QRect(50, 14, 255, 13))
+        # horizontalSlider_red.setMaximum(255)
+        # horizontalSlider_red.setOrientation(QtCore.Qt.Horizontal)
+        # horizontalSlider_red.setObjectName("horizontalSlider_red")
+        horizontalSlider_red.setFocusPolicy(Qt.NoFocus)
+        horizontalSlider_red = QSlider(Qt.Horizontal, self)
+        horizontalSlider_red.setRange(1, OVER_CAPACITY)
+        horizontalSlider_red.setValue(0)
+        horizontalSlider_red.setGeometry(50, 39, 255, 13)
+        horizontalSlider_red.valueChanged[int].connect(self.changeValueRed)
+        ###
+        self.textBrowser_red = QtWidgets.QTextBrowser(self.colorTab)
+        self.textBrowser_red.setGeometry(QtCore.QRect(310, 10, 51, 21))
+        self.textBrowser_red.setInputMethodHints(QtCore.Qt.ImhFormattedNumbersOnly)
+        self.textBrowser_red.setLineWidth(0)
+        self.textBrowser_red.setMidLineWidth(0)
+        self.textBrowser_red.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.textBrowser_red.setReadOnly(False)
+        self.textBrowser_red.setObjectName("textBrowser_red")
+        ###
         self.label_red = QtWidgets.QLabel(self.colorTab)
         self.label_red.setGeometry(QtCore.QRect(19, 10, 26, 21))
         self.label_red.setObjectName("label_red")
+        ### ACO Button
+        self.ACOButton = QtWidgets.QDialogButtonBox(self.colorTab)
+        self.ACOButton.setGeometry(QtCore.QRect(30, 297, 331, 28))
+        self.ACOButton.setOrientation(QtCore.Qt.Horizontal)
+        self.ACOButton.setStandardButtons(QtWidgets.QDialogButtonBox.Apply|QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.ACOButton.setObjectName("ACOButton")
+
+	### New code
+        self.c = Communicate()
+
+        # blue
+        self.widblue = BlueSlider()
+        self.c.updateBW[int].connect(self.widblue.setValue)
+
+        # green
+        self.widgreen = GreenSlider()
+        self.c.updateBW[int].connect(self.widgreen.setValue)
+
+        # red
+        self.widred = RedSlider()
+        self.c.updateBW[int].connect(self.widred.setValue)
+
+        # blue
+        self.horizontalLayoutWidget_Blue = QtWidgets.QWidget(self.colorTab)
+        self.horizontalLayoutWidget_Blue.setGeometry(QtCore.QRect(0, 240, 371, 31))
+        self.horizontalLayoutWidget_Blue.setObjectName("horizontalLayoutWidget_Blue")
+        hboxblue = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_Blue)
+        hboxblue.setContentsMargins(0, 0, 0, 0)
+        hboxblue.setObjectName("hboxblue")
+        hboxblue.addWidget(self.widblue)
+
+        # red
+        self.horizontalLayoutWidget_Red = QtWidgets.QWidget(self.colorTab)
+        self.horizontalLayoutWidget_Red.setGeometry(QtCore.QRect(0, 160, 371, 31))
+        self.horizontalLayoutWidget_Red.setObjectName("horizontalLayoutWidget_Red")
+        hboxred = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_Red)
+        hboxred.setContentsMargins(0, 0, 0, 0)
+        hboxred.setObjectName("hboxred")
+        hboxred.addWidget(self.widred)
+
+        # green
+        self.horizontalLayoutWidget_Green = QtWidgets.QWidget(self.colorTab)
+        self.horizontalLayoutWidget_Green.setGeometry(QtCore.QRect(0, 200, 371, 31))
+        self.horizontalLayoutWidget_Green.setObjectName("horizontalLayoutWidget_Green")
+        hboxgreen = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_Green)
+        hboxgreen.setContentsMargins(0, 0, 0, 0)
+        hboxgreen.setObjectName("hboxgreen")
+        hboxgreen.addWidget(self.widgreen)
+
+        # self.verticalLayoutWidget = QtWidgets.QWidget(self.colorTab)
+        # self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 140, 371, 151))
+        # self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        # self.vbox = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        # self.vbox.setContentsMargins(0, 0, 0, 0)
+        # self.vbox.setObjectName("vbox")
+        # self.vbox.addStretch(1)
+        # self.vbox.addLayout(hboxred)
+        # self.vbox.addLayout(hboxgreen)
+        # self.vbox.addLayout(hboxblue)
+
         self.tabWidget.addTab(self.colorTab, "")
+
+        ###Comment out if call from main form
         # ConfigForm.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(ConfigForm)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(ConfigForm)
+
+    def changeValueRed(self, value):
+        self.c.updateBW.emit(value)
+        self.widred.repaint()
+
+    def changeValueGreen(self, value):
+        self.c.updateBW.emit(value)
+        self.widgreen.repaint()
+
+    def changeValueBlue(self, value):
+        self.c.updateBW.emit(value)
+        self.widblue.repaint()
 
     def retranslateUi(self, ConfigForm):
         _translate = QtCore.QCoreApplication.translate
@@ -94,7 +409,6 @@ class Ui_ConfigForm(object):
         self.label_green.setText(_translate("ConfigForm", "<html><head/><body><p><span style=\" font-size:10pt; color:#018786;\">Green:</span></p></body></html>"))
         self.label_red.setText(_translate("ConfigForm", "<html><head/><body><p><span style=\" font-size:10pt; color:#b00020;\">Red:</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.colorTab), _translate("ConfigForm", "Colors"))
-
 
 # if __name__ == "__main__":
 #     import sys

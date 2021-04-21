@@ -117,9 +117,8 @@ Here, pip list --outdated will list all the out dated packages and then we pipe 
 so it will print only the names. Then, the $(...) will make it a variable and then,
 everything is done auto matically. Make sure you have the permissions.
 (Just put sudo before pip if you're confused) I would write a script named,
-pip-upgrade The code is bellow,
+pip-upgrade The code is sudo cp pip-upgrade /usr/bin/
 
-#!/bin/bash
 sudo pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
 Then use the following lines of script to prepare it:
 

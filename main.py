@@ -32,8 +32,6 @@ import imutils
 # import config_ui
 # import detect
 import main_ui
-# import main_w_textedit
-# import config_ui
 import config_ui
 import about_ui
 # import detect
@@ -268,14 +266,8 @@ class aboutForm(QDialog, about_ui.Ui_AboutForm):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
 
-################## About class ##################
-class aboutForm(QDialog, about_ui.Ui_AboutForm):
-    def __init__(self, parent=None):
-        QDialog.__init__(self, parent=parent)
-        self.setupUi(self)
-
 ################## Config class ##################
-class configColorForm(QDialog, config_ui.Ui_ConfigForm):
+class configForm(QDialog, config_ui.Ui_ConfigForm):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent=parent)
         self.setupUi(self)
@@ -367,7 +359,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         # QMessageBox.Cancel
         # QMessageBox.RejectRole
         # self.form = configForm()
-        self.form = configColorForm()
+        self.form = configForm()
         self.form.show()
         # self.QDialogButtonBox.Cancel.clicked.connect(self.closeWindow)
         print('Your code here for modify color text box|slider and button Apply|Cancel|OK')
@@ -524,81 +516,11 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         # find our device
         dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
         if dev is None:
-            # sys.exit("Could not find device")
-            # sys.stdout.write("error: No Pixy devices have been detected.")
-            # raise RuntimeError('Pixy CMU5 camera device is not found.')
-            # print("Pixy CMU5 camera device is not found.")
-            data = "Pixy CMU5 camera device is not found."
+            data = "Pixy CMU5 camera device is not found..."
             self.plainTextEdit.setPlainText(data)
         else:
             data = "Pixy CMU5 camera device is found!"
             self.plainTextEdit.setPlainText(data)
-
-        # reattach = False
-
-        # # was it found?
-        # if dev.is_kernel_driver_active(0):
-        #     reattach = True
-        #     dev.detach_kernel_driver(0)
-        #     dev.reset()
-
-        # print("deviceClass = " + str(dev.bDeviceClass))
-        # for cfg in dev:
-        #     sys.stdout.write("configuration: " + str(cfg.bConfigurationValue) + '\n')
-        #     for intf in cfg:
-        #         sys.stdout.write('\tInterface: ' + \
-        #                             str(intf.bInterfaceNumber) + \
-        #                             ',' + \
-        #                             str(intf.bAlternateSetting) + \
-        #                             '\n')
-        #         for ep in intf:
-        #             sys.stdout.write('\t\tEndpoint: ' + \
-        #                                 str(ep.bEndpointAddress) + \
-        #                                 ',' + \
-        #                                 str(ep.bmAttributes) + \
-        #                                 '\n')
-
-        # # set the active configuration. With no arguments, the first
-        # # configuration will be the active one
-        # dev.set_configuration()
-
-
-        # for bRequest in range(255):
-        #     try:
-        #         ret = dev.ctrl_transfer(0xC0, bRequest, 0, 0, 1)
-        #         print("bRequest ",bRequest)
-        #         print(ret)
-        #     except:
-        #         # failed to get data for this request
-        #         pass
-
-        # # first endpoint
-        # endpoint = dev[0][(0,0)][0]
-
-        # # get an endpoint instance
-        # cfg = dev.get_active_configuration()
-        # interface_number = cfg[(0,0)].bInterfaceNumber
-        # alternate_setting = usb.control.get_interface(dev,interface_number)
-        # intf = usb.util.find_descriptor(cfg, bInterfaceNumber = interface_number, bAlternateSetting = alternate_setting)
-        # alt = usb.util.find_descriptor(cfg, find_all=True, bInterfaceNumber=1)
-
-
-        # ep = usb.util.find_descriptor(
-        #     intf,
-        #     # match the first OUT endpoint
-        #     custom_match = \
-        #     lambda e: \
-        #         usb.util.endpoint_direction(e.bEndpointAddress) == \
-        #         usb.util.ENDPOINT_OUT)
-
-        # if (ep is None):
-        #     print("Success connect Pixy CMU5")
-        #     # content for do something
-
-        # else:
-        #     print("error: No Pixy devices have been detected.")
-
-# printers = usb.core.find(find_all=1, custom_match=find_all(7))
 
 ################## Support Functions ##################
 ################## Debug function ##################

@@ -531,7 +531,8 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
             data = "Pixy CMU5 camera device is not found."
             self.plainTextEdit.setPlainText(data)
         else:
-            print("Pixy CMU5 camera device is found!")
+            data = "Pixy CMU5 camera device is found!"
+            self.plainTextEdit.setPlainText(data)
 
         # reattach = False
 

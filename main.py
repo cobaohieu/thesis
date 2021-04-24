@@ -364,7 +364,8 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     # Save parameters fucntion:
     #   Store all hex color of Red Green Blue values in a text file
     def save_pixy_parameters_function(self):
-        self.saveFileDialog()
+        # self.saveFileDialog()
+        self.saveParameterFile()
         print('Your code here process print parameters to a file *.rpm')
 
     # Load parameters function:
@@ -424,6 +425,26 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         files, _ = QFileDialog.getOpenFileNames(self, "Open Files", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
         if files:
             print(files)
+
+    def saveParameterFile(self):
+        options = QFileDialog()
+        options.setWindowTitle('Save as')
+        options.setNameFilter('PixyMon Files (*.prm)')
+        options.setDirectory(QDir.currentPath())
+        options.setFileMode(QFileDialog.AnyFile)
+        options.setFilter(QDir.Files)
+
+        if options.exec_():
+            file_filter = 'PixyMon Files (*.prm)'
+            response = QFileDialog.getSaveFileNam(
+                parent = self,
+                caption = 'Select a data file',
+                directory = 'config.prm',
+                filter = file_filter,
+                initialFilter = ';PixyMon Files (*.prm)'
+            )
+            print(response)
+            return response[0]
 
     def saveFileDialog(self):
         options = QFileDialog.Options()
@@ -548,8 +569,12 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         BDeviceClass = 255
         devClass = usb.core.find(bDeviceClass=BDeviceClass)
         printers = usb.core.find(find_all=True, bDeviceClass=BDeviceClass)
-
+        # sudo cp pixy.rules /etc/udev/rules.d/
+        # pixy.rules content like this:
         # SUBSYSTEM=="usb", ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", MODE="0666"
+        # SUBSYSTEM=="usb", ATTR{idVendor}=="b1ac", ATTR{idProduct}=="f000", MODE="0666"
+        # SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="000c", NAME="video2"
+        # SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="b1ac", ATTRS{idProduct}=="f000", NAME="video3"
 
         # find our device
         dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)

@@ -13,7 +13,7 @@ def log(data):
 
 log("started running")
 call('sudo ./hello_pixy', shell=True)
-print "Settings Loaded"
+print("Settings Loaded")
 log("Settings Loaded")
 time.sleep(0.1)
 
@@ -58,10 +58,10 @@ while 1:
         for index in range(0, count):
             detected = []
             if (frame%500) == 0:
-                print '[FRAME=%3d BLOCK_TYPE=%d SIG=%d X=%3d Y=%3d WIDTH=%3d HEIGHT=%3d]' % (
+                print('[FRAME=%3d BLOCK_TYPE=%d SIG=%d X=%3d Y=%3d WIDTH=%3d HEIGHT=%3d]' % (
                     frame, blocks[index].type, blocks[index].signature,
                     blocks[index].x, blocks[index].y, blocks[index].width,
-                    blocks[index].height)
+                    blocks[index].height))
             detected.append(str(frame))
             detected.append(str(blocks[index].type))
             detected.append(str(blocks[index].signature))

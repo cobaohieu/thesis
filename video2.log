@@ -1,0 +1,21 @@
+Driver Info:
+	Driver name      : v4l2 loopback
+	Card type        : Dummy video device (0x0002)
+	Bus info         : platform:v4l2loopback-002
+	Driver version   : 5.8.18
+	Capabilities     : 0x85208002
+		Video Output
+		Video Memory-to-Memory
+		Read/Write
+		Streaming
+		Extended Pix Format
+		Device Capabilities
+	Device Caps      : 0x05208002
+		Video Output
+		Video Memory-to-Memory
+		Read/Write
+		Streaming
+		Extended Pix Format
+ioctl: VIDIOC_ENUM_FMT
+	Type: Video Capture
+

@@ -8,17 +8,27 @@ __version__ = "0.1"
 __license__ = "GPL"
 """
 
-import pygame
-import datetime
 import os
+
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import pygame
+
 import shutil
 import threading
+import datetime
 import time
 
 from pygame import camera
+
 def capture_images(self) -> None:
-    """Captures an image from each active camera."""
+
+    vendor_id = 0xb1ac
+    product_id = 0xf000
+    """
+    Captures an image from each active camera.
+    """
     self.logger.debug("Capturing images")
+
     # Get real or simulated camera paths
     if not self.simulate:
         camera_paths = usb.get_camera_paths(self.vendor_id, self.product_id)
@@ -52,3 +62,7 @@ def capture_images(self) -> None:
         # Capture image
         self.capture_image_pygame(camera_path, capture_image_path)
         shutil.move(capture_image_path, final_image_path)
+
+
+if __name__ == "__main__":
+    capture_images(self)

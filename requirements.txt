@@ -1,5 +1,6 @@
 PyGame
 PyOpenGL
+pyopencl
 PyOpenGL_accelerate
 PyQt5
 PyQt5-sip
@@ -15,3 +16,13 @@ pyusb
 pyzbar
 torch
 torchvision
+coveralls
+flake8
+mock
+pylint
+pytest
+pytest-cov
+requests_mock
+tox
+pytest-shutil
+pyserial

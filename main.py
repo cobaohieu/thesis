@@ -13,28 +13,26 @@ Id         : M3718007
 ################## Import Modules ##################
 import sys
 import os
-import PyQt5
-import time
 import datetime
+import time
 import numpy
 import usb
 import usb.core
 import usb.util
 import usb.backend.libusb1
-import time
 import ctypes
 import cv2
 import argparse
 import imutils
+import PyQt5
 # import pyzar
 
 
-# import config_ui
+import about_ui
+import config_ui
 # import detect
 import main_ui
-import config_ui
-import about_ui
-# import detect
+import process_images
 
 
 # import PyQt5.Qt as Qt
@@ -46,8 +44,6 @@ import PyQt5.QtXml as QtXml
 # import PyQt5.QtMultimedia as QtMultimedia
 # import PyQt5.QtNetwork as QtNetwork
 # import PyQt5.QtXmlPatterns as QtXmlPatterns
-# from PyQt5 import *
-# from PyQt5.QtCore import Qt, QString, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QScopedPointer, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QStringList, QList, QDebug, QMutexLocker, QTime
 
 ################## Import sub modules ##################
 from time import gmtime, strftime
@@ -60,7 +56,7 @@ from imutils.video import VideoStream
 
 from PyQt5.QtCore import (Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime, QTimer, QFile, QAbstractItemModel, QModelIndex, QDataStream, QTextStream)
 
-from PyQt5.QtGui import (QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter, QMouseEvent, QKeyEvent, QTextCursor, QTextBlock, QTransform, QPalette, QBrush, QTextFormat)
+from PyQt5.QtGui import (QIcon, QFont, QImage, QPixmap, QDesktopServices, QColor, QPen, QPainter, QMouseEvent, QKeyEvent, QTextCursor, QTextBlock, QTransform, QPalette, QBrush, QTextFormat, QCloseEvent)
 
 # from PyQt5.QtMultimedia import QVideoFrame, QVideoEncoderSettings, QVideoSurfaceFormat, QMediaContent, QMediaPlayer
 # from PyQt5.QtMultimediaWidgets import QVideoWidget
@@ -303,7 +299,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
 
         # Exit
         self.actionExit.setShortcut('Ctrl+W')
-        self.actionExit.triggered.connect(self.exit_dialog)
+        self.actionExit.triggered.connect(self.exit)
 
         ################## Action ##################
         # Start/Stop
@@ -348,6 +344,10 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   Like Hue color encoding
     #   Or we could import from files: config (for coding) and config_ui (for GUI)
     def configure_dialog(self):
+        # Show form
+        self.form = configForm()
+        self.form.show()
+
         # QMessageBox.NoIcon(self, "Configuration", "Call function code")
         #
         # QMessageBox.RestoreDefaults
@@ -358,9 +358,6 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         # #
         # QMessageBox.Cancel
         # QMessageBox.RejectRole
-        # self.form = configForm()
-        self.form = configForm()
-        self.form.show()
         # self.QDialogButtonBox.Cancel.clicked.connect(self.closeWindow)
         print('Your code here for modify color text box|slider and button Apply|Cancel|OK')
 
@@ -389,6 +386,9 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
 
     def getParameterFile(self):
         options = QFileDialog()
+        options.setWindowTitle('Open')
+        options.setNameFilter('PixyMon Files (*.prm)')
+        options.setDirectory(QDir.currentPath())
         options.setFileMode(QFileDialog.AnyFile)
         options.setFilter(QDir.Files)
 
@@ -402,8 +402,14 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
                     f.close()
 
     def openFileNameDialog(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
+        # options = QFileDialog.Options()
+        options = QFileDialog()
+        options.setWindowTitle('Open')
+        options.setNameFilter('PixyMon Files (*.prm)')
+        options.setDirectory(QDir.currentPath())
+        options.setFileMode(QFileDialog.AnyFile)
+        options.setFilter(QDir.Files)
+        # options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getOpenFileName(self, "Open File", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
         if fileName[0]:
             print(fileName)
@@ -422,12 +428,12 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def saveFileDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self, "Save", "", "All Files (*);;PixyMon Files (*.prm)", options=options)
+        fileName, _ = QFileDialog.getSaveFileName(self, "Save", "", "PixyMon Files (*.prm)", options=options)
         if fileName:
             print(fileName)
 
     def getSaveFileName(self):
-        file_filter = 'All Files (*);;PixyMon Files (*.prm)'
+        file_filter = 'PixyMon Files (*.prm)'
         response = QFileDialog.getSaveFileNam(
             parent = self,
             caption = 'Select a data file',
@@ -442,7 +448,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   A form which show Yes or No when you want to exit the app
     #   If Yes  -> Exit
     #   If No   -> return
-    def exit_dialog(self):
+    def exit(self):
         ret = QMessageBox.question(self, "Exit", "Do you want to exit the app?")
         if ret == QMessageBox.Yes:
             QApplication.quit()
@@ -450,13 +456,35 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         else:
             return
 
+    def closeEvent(self, event:QCloseEvent):
+        ret = QMessageBox.question(self, "Exit", "Do you want to exit the app?")
+        if ret == QMessageBox.Yes:
+            # QApplication.quit()
+            # exit()
+            super().closeEvent(event)
+        else:
+            event.ignore()
+
     ################## Action ##################
     # Run/Stop function:
     #   Allow turn on camera or pause camera like Play/Pause in music
     #   You could you once space to start cmaera and twice space to pause camera
     def run_stop_function(self):
-
         print('Your code here to show camera view on video view')
+
+    def enable_camera(self):
+        run_camera()
+        print('Your code to enable camera')
+
+    def disable_camera(self):
+        stop_camera()
+        print('Your camera to disable')
+
+    def stop_camera(self):
+        print('Your code to stop/pause camera')
+
+    def run_camera(self):
+        print('Your code run camera')
 
     # default program function:
     #   Don't know what to descire the function
@@ -471,6 +499,12 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def get_frame_function(self):
         print('Your code here')
 
+    def set_default_fps(self):
+        print('Your code to get default fps')
+
+    def set_max_fps(self):
+        print('Your code to modify fps to max')
+
     # rgb color detect function:
     #   So difficult function
     #   A function could detect color of object
@@ -478,7 +512,11 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   After that, store it a text file and detect another object
     #   The function must be training and testing
     def rgb_color_detect_function(self):
+        process_images()
         print('Your code here')
+
+    def process_images(self):
+        print('Your code process images')
 
     # scan qr code function:
     #   Enable function scan qr code and decode the picture or image
@@ -535,8 +573,8 @@ def qt_message_handler(mode, context, message):
         mode = 'FATAL'
     else:
         mode = 'DEBUG'
-    print('qt_message_handler: line: %d, func: %s(), file: %s' % (context.line, context.function, context.file))
-    print('  %s: %s\n' % (mode, message))
+    print('[%s]: line: %d, func: %s(), file: %s' % (mode, context.line, context.function, context.file))
+    print('[%s]: %s\n' % (mode, message))
 QtCore.qInstallMessageHandler(qt_message_handler)
 
 
@@ -546,7 +584,7 @@ QtCore.qInstallMessageHandler(qt_message_handler)
 ################## Main ##################
 def main():
     app = QApplication(sys.argv)
-    QtCore.qDebug('Something informative')
+    QtCore.qDebug('Use this function to debug code')
     form = mainForm()
     form.show()
     app.exec_()

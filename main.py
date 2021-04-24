@@ -372,8 +372,8 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   Load a text file which contain all hex color of Red Green Blue values
     #   and show it on camera preview
     def load_pixy_parameters_function(self):
-        # self.openFileNameDialog()
-        self.getParameterFile()
+        # self.loadFileNameDialog()
+        self.loadFileNameDialog()
         print('Your code here process load input parameters to camera and show in video view')
 
     # Restore default parameters function:
@@ -385,13 +385,19 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def save_image_function(self):
         print('Your code here process restore default input parameters to camera and show in video view')
 
-    def getParameterFile(self):
+    def browseFileDialog(self, name):
+        # options = QFileDialog.Options()
         options = QFileDialog()
-        options.setWindowTitle('Open')
-        options.setNameFilter('PixyMon Files (*.prm)')
+        options.setWindowTitle(name)
         options.setDirectory(QDir.currentPath())
+        options.setNameFilter('PixyMon Files (*.prm)')
         options.setFileMode(QFileDialog.AnyFile)
         options.setFilter(QDir.Files)
+        return options
+
+    def loadFileNameDialog(self):
+        name ='Open'
+        options = self.browseFileDialog(name)
 
         if options.exec_():
             fileName = options.selectedFiles()
@@ -402,37 +408,9 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
                     self.plainTextEdit.setPlainText(data)
                     f.close()
 
-    def openFileNameDialog(self):
-        # options = QFileDialog.Options()
-        options = QFileDialog()
-        options.setWindowTitle('Open')
-        options.setNameFilter('PixyMon Files (*.prm)')
-        options.setDirectory(QDir.currentPath())
-        options.setFileMode(QFileDialog.AnyFile)
-        options.setFilter(QDir.Files)
-        # options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "Open File", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
-        if fileName[0]:
-            print(fileName)
-            with open(fileName[0], 'r') as f:
-                    data = f.read()
-                    self.plainTextEdit.setPlainText(data)
-                    f.close()
-
-    def openFilesDialog(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        files, _ = QFileDialog.getOpenFileNames(self, "Open Files", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
-        if files:
-            print(files)
-
     def saveParameterFile(self):
-        options = QFileDialog()
-        options.setWindowTitle('Save as')
-        options.setNameFilter('PixyMon Files (*.prm)')
-        options.setDirectory(QDir.currentPath())
-        options.setFileMode(QFileDialog.AnyFile)
-        options.setFilter(QDir.Files)
+        name ='Save as'
+        options = self.browseFileDialog(name)
 
         if options.exec_():
             file_filter = 'PixyMon Files (*.prm)'
@@ -446,24 +424,48 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
             print(response)
             return response[0]
 
-    def saveFileDialog(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self, "Save", "", "PixyMon Files (*.prm)", options=options)
-        if fileName:
-            print(fileName)
+    # def getParameterFile(self):
+    #     options = QFileDialog()
+    #     options.setWindowTitle('Open')
+    #     options.setNameFilter('PixyMon Files (*.prm)')
+    #     options.setDirectory(QDir.currentPath())
+    #     options.setFileMode(QFileDialog.AnyFile)
+    #     options.setFilter(QDir.Files)
 
-    def getSaveFileName(self):
-        file_filter = 'PixyMon Files (*.prm)'
-        response = QFileDialog.getSaveFileNam(
-            parent = self,
-            caption = 'Select a data file',
-            directory = 'config.prm',
-            filter = file_filter,
-            initialFilter = ';PixyMon Files (*.prm)'
-        )
-        print(response)
-        return response[0]
+    #     if options.exec_():
+    #         fileName = options.selectedFiles()
+
+    #         if fileName[0].endswith('.prm'):
+    #             with open(fileName[0], 'r') as f:
+    #                 data = f.read()
+    #                 self.plainTextEdit.setPlainText(data)
+    #                 f.close()
+
+    # def openFilesDialog(self):
+    #     options = QFileDialog.Options()
+    #     options |= QFileDialog.DontUseNativeDialog
+    #     files, _ = QFileDialog.getOpenFileNames(self, "Open Files", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
+    #     if files:
+    #         print(files)
+
+    # def saveFileDialog(self):
+    #     options = QFileDialog.Options()
+    #     options |= QFileDialog.DontUseNativeDialog
+    #     fileName, _ = QFileDialog.getSaveFileName(self, "Save", "", "PixyMon Files (*.prm)", options=options)
+    #     if fileName:
+    #         print(fileName)
+
+    # def getSaveFileName(self):
+    #     file_filter = 'PixyMon Files (*.prm)'
+    #     response = QFileDialog.getSaveFileNam(
+    #         parent = self,
+    #         caption = 'Select a data file',
+    #         directory = 'config.prm',
+    #         filter = file_filter,
+    #         initialFilter = ';PixyMon Files (*.prm)'
+    #     )
+    #     print(response)
+    #     return response[0]
 
     # Exit dialog:
     #   A form which show Yes or No when you want to exit the app
@@ -533,7 +535,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   After that, store it a text file and detect another object
     #   The function must be training and testing
     def rgb_color_detect_function(self):
-        process_images()
+        # process_images()
         print('Your code here')
 
     def process_images(self):
@@ -567,6 +569,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         VENDOR_ID = 0xb1ac
         PRODUCT_ID = 0xf000
         BDeviceClass = 255
+
         devClass = usb.core.find(bDeviceClass=BDeviceClass)
         printers = usb.core.find(find_all=True, bDeviceClass=BDeviceClass)
         # sudo cp pixy.rules /etc/udev/rules.d/
@@ -601,9 +604,6 @@ def qt_message_handler(mode, context, message):
     print('[%s]: line: %d, func: %s(), file: %s' % (mode, context.line, context.function, context.file))
     print('[%s]: %s\n' % (mode, message))
 QtCore.qInstallMessageHandler(qt_message_handler)
-
-
-
 
 
 ################## Main ##################

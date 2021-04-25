@@ -25,8 +25,15 @@ import cv2
 import argparse
 import imutils
 import PyQt5
+import logging
+import xml.etree.ElementTree as Et
 # import pyzar
 
+
+################## Modules path ##################
+sys.path.append(os.path.join(os.path.dirname(__file__), "./"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
 
 import about_ui
 import config_ui
@@ -52,7 +59,7 @@ from imutils.video import VideoStream
 from detect import detectUsb
 # from pyzbar import pyzbar
 # from pyzbar.pyzbar import decode
-
+from collections import OrderedDict
 
 
 from PyQt5.QtCore import (Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime, QTimer, QFile, QAbstractItemModel, QModelIndex, QDataStream, QTextStream)
@@ -73,11 +80,8 @@ from config_ui import Ui_ConfigForm as Ui_ConfigColorForm
 from about_ui import Ui_AboutForm as Ui_AboutForm
 # from detect import
 
-################## Modules path ##################
-sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
 # from get_blocks import Blocks
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
 # from pan_tilt import Blocks, Gimbal
 
 ################## Class function ##################
@@ -378,7 +382,7 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     #   and show it on camera preview
     def load_pixy_parameters_function(self):
         # self.loadFileNameDialog()
-        self.loadFileNameDialog()
+        self.loadFileNameDialog2()
         print('Your code here process load input parameters to camera and show in video view')
 
     # Restore default parameters function:
@@ -391,11 +395,10 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         print('Your code here process restore default input parameters to camera and show in video view')
 
     def browseFileDialog(self, name):
-        # options = QFileDialog.Options()
         options = QFileDialog()
         options.setWindowTitle(name)
         options.setDirectory(QDir.currentPath())
-        options.setNameFilter('PixyMon Files (*.prm)')
+        options.setNameFilter('All Files (*.*);;PixyMon Files (*.prm)')
         options.setFileMode(QFileDialog.AnyFile)
         options.setFilter(QDir.Files)
         return options
@@ -407,70 +410,42 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         if options.exec_():
             fileName = options.selectedFiles()
 
-            if fileName[0].endswith('.prm'):
+            if fileName[0].endswith('*.*'):
                 with open(fileName[0], 'r') as f:
                     data = f.read()
                     self.plainTextEdit.setPlainText(data)
                     f.close()
 
+    def loadFileNameDialog2(self):
+        options = QFileDialog.Options()
+        # options |= QFileDialog.DontUseNativeDialog
+        files, _ = QFileDialog.getOpenFileNames(self, "QFileDialog.getOpenFileNames()", "config.prm", "All Files (*.*);;PixyMon Files (*.prm)", options = options)
+        if files[0].endswith('*.*'):
+            with open(fileName[0], 'r') as f:
+                data = f.read()
+                self.plainTextEdit.setPlainText(data)
+                f.close()
+        # print(files)
+
     def saveParameterFile(self):
-        name ='Save as'
-        options = self.browseFileDialog(name)
+        options = QFileDialog.Options()
+        fileName, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "config.prm", "All Files (*.*);;PixyMon Files (*.prm)", options = options)
 
-        if options.exec_():
-            file_filter = 'PixyMon Files (*.prm)'
-            response = QFileDialog.getSaveFileNam(
-                parent = self,
-                caption = 'Select a data file',
-                directory = 'config.prm',
-                filter = file_filter,
-                initialFilter = ';PixyMon Files (*.prm)'
-            )
-            print(response)
-            return response[0]
+        if fileName:
+            print(fileName)
+            return fileName[0]
 
-    # def getParameterFile(self):
-    #     options = QFileDialog()
-    #     options.setWindowTitle('Open')
-    #     options.setNameFilter('PixyMon Files (*.prm)')
-    #     options.setDirectory(QDir.currentPath())
-    #     options.setFileMode(QFileDialog.AnyFile)
-    #     options.setFilter(QDir.Files)
-
-    #     if options.exec_():
-    #         fileName = options.selectedFiles()
-
-    #         if fileName[0].endswith('.prm'):
-    #             with open(fileName[0], 'r') as f:
-    #                 data = f.read()
-    #                 self.plainTextEdit.setPlainText(data)
-    #                 f.close()
-
-    # def openFilesDialog(self):
-    #     options = QFileDialog.Options()
-    #     options |= QFileDialog.DontUseNativeDialog
-    #     files, _ = QFileDialog.getOpenFileNames(self, "Open Files", r"//home//$USER//Documents//PixyMon//", "All Files (*);;PixyMon Files (*.prm)", options=options)
-    #     if files:
-    #         print(files)
-
-    # def saveFileDialog(self):
-    #     options = QFileDialog.Options()
-    #     options |= QFileDialog.DontUseNativeDialog
-    #     fileName, _ = QFileDialog.getSaveFileName(self, "Save", "", "PixyMon Files (*.prm)", options=options)
-    #     if fileName:
-    #         print(fileName)
-
-    # def getSaveFileName(self):
-    #     file_filter = 'PixyMon Files (*.prm)'
-    #     response = QFileDialog.getSaveFileNam(
-    #         parent = self,
-    #         caption = 'Select a data file',
-    #         directory = 'config.prm',
-    #         filter = file_filter,
-    #         initialFilter = ';PixyMon Files (*.prm)'
-    #     )
-    #     print(response)
-    #     return response[0]
+    def getSaveFileName(self):
+        file_filter = 'PixyMon Files (*.prm)'
+        response = QFileDialog.getSaveFileNam(
+            parent = self,
+            caption = 'Select a data file',
+            directory = 'config.prm',
+            filter = file_filter,
+            initialFilter = 'All Files;;;PixyMon Files (*.prm)'
+        )
+        print(response)
+        return response[0]
 
     # Exit dialog:
     #   A form which show Yes or No when you want to exit the app

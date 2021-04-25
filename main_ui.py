@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
+        mainWindow.setWindowIcon(QtGui.QIcon(":/images/logo.png"))
         mainWindow.setWindowModality(QtCore.Qt.NonModal)
         mainWindow.setEnabled(True)
         mainWindow.resize(677, 626)

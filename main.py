@@ -26,21 +26,8 @@ import argparse
 import imutils
 import PyQt5
 import logging
-import xml.etree.ElementTree as Et
+import xml.etree.ElementTree as ET
 # import pyzar
-
-
-################## Modules path ##################
-sys.path.append(os.path.join(os.path.dirname(__file__), "./"))
-sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
-sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
-
-import about_ui
-import config_ui
-import detect
-import main_ui
-import process_images
-
 
 # import PyQt5.Qt as Qt
 import PyQt5.QtCore as QtCore
@@ -52,15 +39,26 @@ import PyQt5.QtXml as QtXml
 # import PyQt5.QtNetwork as QtNetwork
 # import PyQt5.QtXmlPatterns as QtXmlPatterns
 
+
+################## Modules path ##################
+sys.path.append(os.path.join(os.path.dirname(__file__), "./"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "./get_blocks"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "./pantilt"))
+
+import about_ui
+import config_ui
+import usb_detect
+import main_ui
+import process_images
+import process_xml
+
 ################## Import sub modules ##################
 from time import gmtime, strftime
 from PIL import Image
 from imutils.video import VideoStream
-from detect import detectUsb
 # from pyzbar import pyzbar
 # from pyzbar.pyzbar import decode
 from collections import OrderedDict
-
 
 from PyQt5.QtCore import (Qt, QSysInfo, QUrl, QMetaType, QSettings, QObject, QDir, QVariant, QIODevice, QThread, QMutex, QWaitCondition, QMutexLocker, QTime, QTimer, QFile, QAbstractItemModel, QModelIndex, QDataStream, QTextStream)
 
@@ -78,7 +76,8 @@ from PyQt5.uic import loadUi
 from main_ui import Ui_mainWindow as Ui_mainWindow
 from config_ui import Ui_ConfigForm as Ui_ConfigColorForm
 from about_ui import Ui_AboutForm as Ui_AboutForm
-# from detect import
+from usb_detect import detectUsb
+from process_xml import saveParameterFile
 
 # from get_blocks import Blocks
 
@@ -394,18 +393,13 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def save_image_function(self):
         print('Your code here process restore default input parameters to camera and show in video view')
 
-    def browseFileDialog(self, name):
+    def loadFileNameDialog(self):
         options = QFileDialog()
         options.setWindowTitle(name)
         options.setDirectory(QDir.currentPath())
-        options.setNameFilter('All Files (*.*);;PixyMon Files (*.prm)')
+        options.setNameFilter('All Files (*.);;PixyMon Files (*.prm)')
         options.setFileMode(QFileDialog.AnyFile)
         options.setFilter(QDir.Files)
-        return options
-
-    def loadFileNameDialog(self):
-        name ='Open'
-        options = self.browseFileDialog(name)
 
         if options.exec_():
             fileName = options.selectedFiles()
@@ -419,33 +413,39 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
     def loadFileNameDialog2(self):
         options = QFileDialog.Options()
         # options |= QFileDialog.DontUseNativeDialog
-        files, _ = QFileDialog.getOpenFileNames(self, "QFileDialog.getOpenFileNames()", "config.prm", "All Files (*.*);;PixyMon Files (*.prm)", options = options)
-        if files[0].endswith('*.*'):
-            with open(fileName[0], 'r') as f:
+        fileName, _ = QFileDialog.getOpenFileNames(self, "Open", "config.prm", "All Files (*.*);;PixyMon Files (*.prm)", options = options)
+
+        if fileName:
+            with open(fileName[0], "r") as f:
                 data = f.read()
-                self.plainTextEdit.setPlainText(data)
+                self.plainTextEdit.setPlainText(str(data))
                 f.close()
         # print(files)
 
     def saveParameterFile(self):
         options = QFileDialog.Options()
-        fileName, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "config.prm", "All Files (*.*);;PixyMon Files (*.prm)", options = options)
-
+        # data_paths = [i for i in (os.path.join(in_dir, f) for f in os.listdir(in_dir)) if os.path.isfile(i)]
+        fileName, _ = QFileDialog.getSaveFileName(self, "Save as", "config.prm", "All Files (*.*);;PixyMon Files (*.prm)", options = options)
+        self.plainTextEdit.setPlainText(str(fileName))
         if fileName:
-            print(fileName)
-            return fileName[0]
+            # with open(fileName[0], "w") as f:
+            #     data = "Config some thing that you want!"
+            #     f.write(data)
+            #     f.close()
+            # return fileName[0]
+            saveParameterFile(fileName)
 
-    def getSaveFileName(self):
-        file_filter = 'PixyMon Files (*.prm)'
-        response = QFileDialog.getSaveFileNam(
-            parent = self,
-            caption = 'Select a data file',
-            directory = 'config.prm',
-            filter = file_filter,
-            initialFilter = 'All Files;;;PixyMon Files (*.prm)'
-        )
-        print(response)
-        return response[0]
+    # def getSaveFileName(self):
+    #     file_filter = 'PixyMon Files (*.prm)'
+    #     response = QFileDialog.getSaveFileNam(
+    #         parent = self,
+    #         caption = 'Select a data file',
+    #         directory = 'config.prm',
+    #         filter = file_filter,
+    #         initialFilter = 'All Files;;;PixyMon Files (*.prm)'
+    #     )
+    #     print(response)
+    #     return response[0]
 
     # Exit dialog:
     #   A form which show Yes or No when you want to exit the app
@@ -562,7 +562,7 @@ def qt_message_handler(mode, context, message):
         mode = 'FATAL'
     else:
         mode = 'DEBUG'
-    print('[%s]: line: %d, func: %s(), file: %s' % (mode, context.line, context.function, context.file))
+    print('[%s]: line: %d, function: %s(), file: %s' % (mode, context.line, context.function, context.file))
     print('[%s]: %s\n' % (mode, message))
 QtCore.qInstallMessageHandler(qt_message_handler)
 

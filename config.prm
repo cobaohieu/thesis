@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<Parameters>
+	<Configure>
+		<Color>
+			<Color name="Red value">255</Color>
+			<Color name="Green value">255</Color>
+			<Color name="Blue value">255</Color>
+			<Directory name="Path">/~/Documents/PixyMon/</Directory>
+			<DefaultValues name="Red value">0</DefaultValues>
+			<DefaultValues name="Green value">0</DefaultValues>
+			<DefaultValues name="Blue value">0</DefaultValues>
+		</Color>
+	</Configure>
+	<SaveLoad>
+		<Directory/>
+	</SaveLoad>
+	<Restore>
+		<DefaultValues/>
+	</Restore>
+</Parameters>

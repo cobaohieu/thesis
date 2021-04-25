@@ -30,7 +30,7 @@ import PyQt5
 
 import about_ui
 import config_ui
-# import detect
+import detect
 import main_ui
 import process_images
 
@@ -49,6 +49,7 @@ import PyQt5.QtXml as QtXml
 from time import gmtime, strftime
 from PIL import Image
 from imutils.video import VideoStream
+from detect import detectUsb
 # from pyzbar import pyzbar
 # from pyzbar.pyzbar import decode
 
@@ -275,7 +276,11 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         self.setupUi(self)
         self.center()
 
+        timeInfo = "Now is: " +  strftime("%d-%m-%Y %H:%M:%S", gmtime())
+        self.plainTextEdit.setPlainText(str(timeInfo))
+
         self.detectUsb()
+
         ################## File ##################
         # Config dialog
         self.actionConfigure.setShortcut('Ctrl+,')
@@ -561,32 +566,13 @@ class mainForm(QMainWindow, main_ui.Ui_mainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         form.moveCenter(cp)
         self.move(form.topLeft())
-        # self.move(form.center())
-        # self.move(form.bottomLeft())
-        # self.move(form.bottomRight())
 
     def detectUsb(self):
         VENDOR_ID = 0xb1ac
         PRODUCT_ID = 0xf000
-        BDeviceClass = 255
+        B_DEVICE_CLASS = 255
 
-        devClass = usb.core.find(bDeviceClass=BDeviceClass)
-        printers = usb.core.find(find_all=True, bDeviceClass=BDeviceClass)
-        # sudo cp pixy.rules /etc/udev/rules.d/
-        # pixy.rules content like this:
-        # SUBSYSTEM=="usb", ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", MODE="0666"
-        # SUBSYSTEM=="usb", ATTR{idVendor}=="b1ac", ATTR{idProduct}=="f000", MODE="0666"
-        # SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="000c", NAME="video2"
-        # SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="b1ac", ATTRS{idProduct}=="f000", NAME="video3"
-
-        # find our device
-        dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
-        if dev is None:
-            data = "Pixy CMU5 camera device is not found..."
-            self.plainTextEdit.setPlainText(data)
-        else:
-            data = "Pixy CMU5 camera device is found!"
-            self.plainTextEdit.setPlainText(data)
+        self.plainTextEdit.setPlainText(str(detectUsb(VENDOR_ID, PRODUCT_ID, B_DEVICE_CLASS)))
 
 ################## Support Functions ##################
 ################## Debug function ##################

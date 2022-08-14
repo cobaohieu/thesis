@@ -1,6 +1,0 @@
-Creating the wrapper
-
-swig -python3 example.i
-
-Built the extension
-python3 setup.py build_ext

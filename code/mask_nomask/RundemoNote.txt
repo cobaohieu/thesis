@@ -1,0 +1,23 @@
+######### Demo mask #########
+cd demo-mask
+
+## C++
+# Run setup: CUDA_VER=10.2 make -C nvdsinfer_custom_impl_Yolo
+# Run demo
+sudo motion
+deepstream-app -c deepstream_app_config.txt
+
+## Python3
+sudo python3 detect_mask_nomask_opencv.py /dev/video0
+
+######### Demo vegetable #########
+cd demo-vegetable
+
+##C++
+# Run setup: CUDA_VER=10.2 make -C nvdsinfer_custom_impl_Yolo
+# Run demo
+sudo motion
+deepstream-app -c deepstream_app_config.txt
+
+## Python3
+sudo python3 detect_vegetables_opencv.py /dev/video0

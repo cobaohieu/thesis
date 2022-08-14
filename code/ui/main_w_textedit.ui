@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>cobaohieu</author>
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>646</width>
+    <height>646</height>
+   </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Pixy Camera Control (2020)</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPlainTextEdit" name="plainTextEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>520</y>
+      <width>645</width>
+      <height>93</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>108</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>649</width>
+      <height>108</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Umpush</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabConfig">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>645</width>
+      <height>523</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Umpush</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="imageTab">
+     <property name="font">
+      <font>
+       <family>Umpush</family>
+       <pointsize>11</pointsize>
+       <italic>false</italic>
+      </font>
+     </property>
+     <attribute name="title">
+      <string>Image settings</string>
+     </attribute>
+     <widget class="QGroupBox" name="image_grpbx">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>0</y>
+        <width>621</width>
+        <height>475</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Controls</string>
+      </property>
+      <widget class="QSlider" name="horSlider_image_staturation">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>107</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_gamma">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>258</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Gamma</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_tilt">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>382</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Tilt</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_temperature">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>293</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_temperature">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>289</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Temperature</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_tilt">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>386</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_brightness">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>41</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Brightness</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_pan">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>355</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_sharpness">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>227</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sharpness</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_constrast">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>76</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_exposure">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>196</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Exposure</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_sharpness">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>231</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_birghtness">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>45</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_zoom">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>320</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Zoom</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_contrast">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>72</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Contrast</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_pan">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>351</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Pan</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_exposure">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>200</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_gamma">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>262</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_gain">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>165</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Gain</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_hue">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>134</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hue</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlide_image_gamma">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>138</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_hue">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>169</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horSlider_image_zoom">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>324</y>
+         <width>510</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_image_saturation">
+       <property name="geometry">
+        <rect>
+         <x>14</x>
+         <y>103</y>
+         <width>75</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Saturation</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckb_image_rotateup">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>444</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rotate up</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckb_image_mirror">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>413</y>
+         <width>77</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Mirror</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="videoTab">
+     <attribute name="title">
+      <string>Video settings</string>
+     </attribute>
+     <widget class="QGroupBox" name="video_grpbx">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>0</y>
+        <width>621</width>
+        <height>237</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Controls</string>
+      </property>
+      <widget class="QCheckBox" name="ckb_video_mono">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>169</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Mono</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cbb_video_framerate">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>200</y>
+         <width>131</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="currentText">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckb_video_blur">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>107</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Blur</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckb_video_invert">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>76</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Invert</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cbb_video_resolution">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>200</y>
+         <width>131</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckb_video_mirror">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>45</y>
+         <width>77</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Mirror</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckb_video_rotateup">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>138</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Umpush</family>
+         <pointsize>11</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rotate up</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="logTab">
+     <attribute name="title">
+      <string>Logs</string>
+     </attribute>
+     <widget class="QLabel" name="imgLabel">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>640</width>
+        <height>480</height>
+       </rect>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::AutoText</enum>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>646</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionConfigure"/>
+    <addaction name="actionSave_Pixy_parameters"/>
+    <addaction name="actionLoad_Pixy_parameters"/>
+    <addaction name="actionRestore_default_parameters"/>
+    <addaction name="actionSave_Image"/>
+    <addaction name="actionSave_Video"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuAction">
+    <property name="title">
+     <string>Action</string>
+    </property>
+    <addaction name="actionRun_Stop"/>
+    <addaction name="actionDefault_Program"/>
+    <addaction name="actionGet_frame"/>
+    <addaction name="actionDetect_color"/>
+    <addaction name="actionScan_code"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionHelp"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuAction"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionRun_Stop">
+   <property name="text">
+    <string>Start/Stop</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+    </font>
+   </property>
+  </action>
+  <action name="actionDefault_Program">
+   <property name="text">
+    <string>Default program</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+    </font>
+   </property>
+  </action>
+  <action name="actionScan_code">
+   <property name="text">
+    <string>Scan QR code</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+    </font>
+   </property>
+  </action>
+  <action name="actionDetect_color">
+   <property name="text">
+    <string>RGB color detect</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+    </font>
+   </property>
+  </action>
+  <action name="actionSave_Pixy_parameters">
+   <property name="text">
+    <string>Save Pixy parameters</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionConfigure">
+   <property name="text">
+    <string>Configure</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionLoad_Pixy_parameters">
+   <property name="text">
+    <string>Load Pixy parameters</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionGet_frame">
+   <property name="text">
+    <string>Get frame</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+    </font>
+   </property>
+  </action>
+  <action name="actionSave_Image">
+   <property name="text">
+    <string>Save Image</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionRestore_default_parameters">
+   <property name="text">
+    <string>Restore default parameters</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionSave_Video">
+   <property name="text">
+    <string>Save Video</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Umpush</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,76 @@
+testresources
+setuptools
+future
+mock
+h5py
+keras_preprocessing
+keras_applications
+gast
+futures
+protobuf
+pybind11
+onnxruntime
+coveralls
+flake8
+image
+imutils
+libusb
+libusb1
+numpy==1.17
+pickles
+opencv-python==4.4.0.46
+opencv-contrib-python==4.4.0.46
+Pillow
+pyautogui
+pygame
+pylint
+pynetworktables
+pyopengl
+pyopengl_accelerate
+pyqt5
+pyqt5-sip
+pyqt5-tools
+pyserial
+pytest
+pytest-cov
+pytest-shutil
+python-sensors
+pyudev
+pyusb
+pyzbar
+requests_mock
+torch
+torchvision
+tox
+keras
+launchpadlib
+matplotlib
+cython
+pyinstaller
+lxml
+mss
+mkl
+tensorflow
+utils
+pyshine
+PyQtWebEngine
+scipy==1.5.1
+screeninfo
+joblib
+scikit-learn
+scikit-image
+mediapipe
+sounddevice
+mxnet-jetson
+# show
+# freeze
+# pytorch
+# sklearn
+# training
+# builtins
+# insightface
+# tf-nightly-gpu
+# tensorflow-gpu
+# opencv-python-headless
+# pencv-contrib-python-headless
+# sounddevice --user

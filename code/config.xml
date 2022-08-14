@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<software>
+	<name>Camera Control</name>
+	<version>1.0.0</version>
+	<copyright>Copyright 2021 - Co Bao Hieu</copyright>
+	<year>2020</year>
+	<photo>
+		<brightness>128.0</brightness>
+		<contrast>128.0</contrast>
+		<staturation>128.0</staturation>
+		<gain>0.0</gain>
+		<exposure>-5.0</exposure>
+		<sharpness>128.0</sharpness>
+		<focus>0.0</focus>
+		<zoom>100.0</zoom>
+		<mirror>Checked</mirror>
+		<rotateup>Unchecked</rotateup>
+	</photo>
+	<video>
+		<mirror>Checked</mirror>
+		<rotateup>Unchecked</rotateup>
+		<blur>Unchecked</blur>
+		<invert>Unchecked</invert>
+		<mono>Unchecked</mono>
+	</video>
+</software>

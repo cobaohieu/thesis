@@ -4,10 +4,10 @@
 Will update soon
 
 ### UI preview
-![Screenshot](/images/UI_only.png)
+<img class="alignnone size-full wp-image-487" src="/images/UI_only.png" alt="UI preview only" width="240" height="240" />
 
 ### UI with full function preview
-![Screenshot](/images/UI_full_func.png)
+<img class="alignnone size-full wp-image-487" src="/images/UI_full_func.png" alt="UI with full fucntion preview" width="240" height="240" />
 
 ## Thanks to:
 Will Update soon

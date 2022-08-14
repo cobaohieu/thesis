@@ -4,10 +4,10 @@
 Will update soon
 
 ### UI preview
-![Screenshot](/images/ui.png)
+![Screenshot](/images/UI_only.png)
 
 ### UI with full function preview
-![Screenshot](/images/ui_full.png)
+![Screenshot](/images/UI_full_func.png)
 
 ## Thanks to:
 Will Update soon

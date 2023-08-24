@@ -16,7 +16,7 @@ image
 imutils
 libusb
 libusb1
-numpy==1.17
+numpy==1.22.0
 pickles
 opencv-python==4.4.0.46
 opencv-contrib-python==4.4.0.46

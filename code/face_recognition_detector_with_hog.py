@@ -37,6 +37,7 @@ import time
 import math
 import numpy as np
 import numpy.linalg
+# import cvzone
 # import matplotlib
 
 from numpy import argmin
@@ -203,6 +204,12 @@ def main(stream):
             # Draw a box around the face
             cv2.rectangle(frame, (left, int(top*0.5)), (int(right*1.5), int(bottom*0.5)), (130, 252, 94), 2)
             # cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+
+            # Draw a box around the face using cvzone
+            # y1, x2, y2, x1 = faceLoc
+            # y1, x2, y2, x1 = y1 *4, x2 * 4, y2 * 4, x1 * 4
+            # bbox = 55+x1, 162+y1, x2-x1, y2-y1
+            # cvzone.correctRect(imgBackground, bbox, rt=0)
 
             # Draw a label with a name below the face
             cv2.rectangle(frame, (left, int(top*0.5) + 35), (int(right*1.5), int(top*0.5)), (130, 252, 94), cv2.FILLED)

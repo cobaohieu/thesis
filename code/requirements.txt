@@ -54,7 +54,7 @@ tensorflow
 utils
 pyshine
 PyQtWebEngine
-scipy==1.5.1
+scipy==1.10.0
 screeninfo
 joblib
 scikit-learn
